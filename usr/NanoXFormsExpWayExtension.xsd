@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mathfp="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config" xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" xmlns:ExpWay="http://eric.brechemier.name/2004/NanoXForms/extension/expWay" targetNamespace="http://eric.brechemier.name/2004/NanoXForms/extension/expWay" elementFormDefault="qualified">
-  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fp="http://eric.brechemier.name/2004/fp/" xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config" xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" xmlns:ExpWay="http://eric.brechemier.name/2004/NanoXForms/extension/expWay" targetNamespace="http://eric.brechemier.name/2004/NanoXForms/extension/expWay" elementFormDefault="qualified">
+  <xsd:import namespace="http://eric.brechemier.name/2004/fp/" schemaLocation="fp.xsd"/>
   <!--
   *** Credits ***
   Schema: Your Name, Month 2004
