@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   xmlns:include="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/"
+   targetNamespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/"
+   elementFormDefault="qualified"
+>
+  <xsd:annotation>
+    <xsd:documentation>
+      Define Ids and IdRefs and include ids and idrefs values in binary file too,
+      making them available for use in decoder code.
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <!-- elements: none -->
+  
+  <!-- complex types: none -->
+  
+  <!-- simple types: custom codecs -->
+  <xsd:simpleType name="Id">
+    <xsd:restriction base="xsd:byte" />
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="IdRef">
+    <xsd:restriction base="xsd:byte" />
+  </xsd:simpleType>
+  
+</xsd:schema>
