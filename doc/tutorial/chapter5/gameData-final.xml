@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<quizz xmlns="http://www.example.com/Guess_Me_Right" topic="Jeux de Rôles">
+  <questions>
+    <question title="Une porte..." prediction="2">
+      <text>Vous êtes dans un donjon ; alors que vous arrivez devant une porte, vous entendez des craquements étranges de l'autre côté. Que faîtes-vous ?</text>
+      <answer category="2">j'ouvre la porte, avec appréhension</answer>
+      <answer category="1">je passe devant en sifflotant, et je cherche un autre chemin</answer>
+      <answer category="0">je défonce la porte joyeusement</answer>
+    </question>
+    <question title="Un arbre..." prediction="1">
+      <text>Vous vous promenez dans la nature, en quête d'aventures. En sortant d'une clairière, un petit arbre se dresse sur votre chemin et entrave totalement votre passage. Que faites-vous ?</text>
+      <answer category="1">je grimpe sur l'arbre jusqu'à mi-hauteur, et me laisse tomber de l'autre côté avec une petite roulade</answer>
+      <answer category="2">je coupe quelques branches pour me frayer un passage</answer>
+      <answer category="0">je coupe les branches qui me gênent, puis les autres, puis le tronc, et je pisse dessus</answer>
+    </question>
+    <question title="Une grotte..." prediction="1">
+      <text>Un peu plus loin, une grotte s'enfonce profondément dans la montagne.</text>
+      <answer category="0">Ah, qu'il fait bon rentrer chez soi</answer>
+      <answer category="1">Il fait bien noir là-dedans. Restons dehors profiter du soleil.</answer>
+      <answer category="2">Une grotte ? Où ça ?</answer>
+    </question>
+  </questions>
+  <result>
+    <category id="0" name="nain">Vous, Vous êtes bien un nain !</category>
+    <category id="1" name="elfe">Vous avez plutôt l'air d'un elfe...</category>
+    <category id="2" name="humain">Vous n'êtes qu'un humain, finalement.</category>
+  </result>
+</quizz>

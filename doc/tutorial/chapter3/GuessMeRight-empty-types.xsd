@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:include="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" xmlns:ignore="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" xmlns:mathFP="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config" xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" xmlns:gmr="http://www.example.com/Guess_Me_Right" elementFormDefault="qualified" targetNamespace="http://www.example.com/Guess_Me_Right">
+  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" schemaLocation="idRefIgnore.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" schemaLocation="idRefInclude.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+  <!--
+  elements: User Vocabulary
+  -->
+  <!--
+  Each element refers to a complexType through its type attribute.
+  Using ant addSchemaTypes, missing complexTypes will be added, using type value as hints:
+  - when type="st", a simple content complexType is created (element with text value)
+  e.g. <xsd:element name="root" type="st" />
+  - when type="ch" or type="choice" a complex type with children in a choice is created
+  e.g. <xsd:element name="root" type="ch" />
+  - when type="seq" or type="sequence" a complex type with children in a sequence is created
+  e.g. <xsd:element name="root" type="seq" />
+  - when type attribute is missing a complex type without children is created
+  e.g. <xsd:element name="root" />
+  - when a qualified name is provided (prefix:localName), localName is used as the complexType name
+  e.g. <xsd:element name="root" type="usr:Root" />
+  -->
+  <xsd:element name="quizz" type="gmr:Quizz"/>
+  <xsd:element name="questions" type="gmr:Questions"/>
+  <xsd:element name="result" type="gmr:Result"/>
+  <xsd:element name="question" type="gmr:Question"/>
+  <xsd:element name="text" type="gmr:Text"/>
+  <xsd:element name="answer" type="gmr:Answer"/>
+  <xsd:element name="category" type="gmr:Category"/>
+  <!--
+  complexTypes defining tree structure: User Grammar
+  NOTA simpleTypes may be used to rename standard types, and for custom codec in future versions.
+  -->
+  <!--
+  Using ant addSchemaAnnotations, missing annotations are added to schema & complex types
+  -->
+  <xsd:complexType name="Quizz">
+    <xsd:sequence>
+      <!--<xsd:element ref="usr:Type" minOccurs="0" maxOccurs="unbounded" />-->
+    </xsd:sequence>
+    <!--<xsd:attribute name="id" type="xsd:byte" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Questions">
+    <xsd:sequence>
+      <!--<xsd:element ref="usr:Type" minOccurs="0" maxOccurs="unbounded" />-->
+    </xsd:sequence>
+    <!--<xsd:attribute name="id" type="xsd:byte" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Result">
+    <xsd:sequence>
+      <!--<xsd:element ref="usr:Type" minOccurs="0" maxOccurs="unbounded" />-->
+    </xsd:sequence>
+    <!--<xsd:attribute name="id" type="xsd:byte" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Question">
+    <xsd:sequence>
+      <!--<xsd:element ref="usr:Type" minOccurs="0" maxOccurs="unbounded" />-->
+    </xsd:sequence>
+    <!--<xsd:attribute name="id" type="xsd:byte" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Text">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <!--<xsd:attribute name="id" type="xsd:byte" />-->
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="Answer">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <!--<xsd:attribute name="id" type="xsd:byte" />-->
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="Category">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <!--<xsd:attribute name="id" type="xsd:byte" />-->
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="binary4java" basedir="." default="description">
+   
+  <!--
+  Project description: Binary for Java Encoder and Decoder Generator
+  
+  Credits:
+  Author: Eric Bréchemier, November 2004
+  
+  Uses MathFP (developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/)
+  Uses Saxon, Xalan, and XercesJarv
+  -->
+  
+  
+  <!-- <ONLY PROPERTIES TO MODIFY> -->
+    <!-- input files -->
+    <property name="USER.schema.dir.path" value="usr"/>
+    <property name="USER.input.data.path" value="usr/gameData.xml"/>
+    <property name="USER.schema.name" value="GuessMeRight.xsd"/>
+    <property name="USER.namespace.uri" value="http://www.example.com/Guess_Me_Right"/>
+    <property name="USER.namespace.prefix" value="gmr"/>
+    
+    <!-- java destination project -->
+    <property name="USER.java.package.dir.path" value="../GuessMeRight/src/com/example"/>
+    <property name="USER.decoder.java.package" value="com.example" />
+    
+    <!-- version -->
+    <property name="USER.include.version.number.FALSE" value="set name end to TRUE or FALSE to use this feature" />
+  <!-- </ONLY PROPERTIES TO MODIFY> -->
+  
+  
+  
+  
+  
+  <!-- FOLLOWING PROPERTIES SHOULD NOT BE MODIFIED-->
+  
+  <!-- Michael Kay Saxon -->
+  <property name="lib.path" value="lib"/>
+  <property name="saxon.jar" value="${lib.path}/saxon-6.5.3/saxon.jar"/>
+  
+  <!-- Apache Xalan and java extension -->
+  <property name="xalan.class" value="org.apache.xalan.xslt.Process"/> <!-- included in Java JRE -->
+  <property name="encoder.java.extension.path" value="src/encoder/java"/>
+  
+  <!-- James Clark Jing, a validator for RELAX NG and other schema languages -->
+  <property name="jing.jar" value="${lib.path}/jing-20030619/jing.jar"/>
+  
+  <target name="validateSchemaUsingJing">
+    <java jar="${jing.jar}" fork="true">
+      <arg value="${param.xml.schema}"/>
+    </java>
+  </target>
+  
+  <target name="validateDataUsingJing">
+    <java jar="${jing.jar}" fork="true">
+      <arg value="${param.xml.schema}"/>
+      <arg value="${param.xml.data}"/>
+    </java>
+  </target>
+  
+  <!-- Sun Multi-Schema XML Validator and Xml Validation -->
+  
+  <property name="msv.jar" value="${lib.path}/msv-20041031/msv.jar"/>
+  
+  <target name="validateSchemaUsingSunMSV">
+    <java jar="${msv.jar}" fork="true">
+      <arg value="${param.xml.schema}"/>
+    </java>
+  </target>
+  
+  <target name="validateDataUsingSunMSV">
+    <java jar="${msv.jar}" fork="true">
+      <arg value="${param.xml.schema}"/>
+      <arg value="${param.xml.data}"/>
+    </java>
+  </target>
+  
+  <!-- Tal Davidson Artistic Style Formatter -->
+  
+  <property name="artistic.style.cmd" value="${lib.path}/astyle-1.15.3/astyle"/>
+  <property name="artistic.style.options" value="--style=java --suffix=.before.indent"/>
+  
+  <target name="indentJavaUsingArtisticStyle">
+    <exec executable="${artistic.style.cmd}">
+      <arg line="${artistic.style.options}"/>
+      <arg value="${java.file.to.indent}"/>
+    </exec>
+  </target>
+  
+  <!-- Oliver Becker XML to HTML Verbatim Formatter with Syntax Highlighting -->
+  
+  <property name="pretty.print.path" value="src/utils/prettyPrint"/>
+  <property name="pretty.print.css.path" value="${pretty.print.path}/xmlverbatim.css"/>
+  
+  <!-- Eric Bréchemier PowerPack for id/ref codecs: (un)comment to (enable)disable powerpack  -->
+  
+  <property name="powerpack.encoder.src.path" value="src/powerpack/encoder"/>
+  <property name="powerpack.encoder.generation.transform.path" value="${powerpack.encoder.src.path}/XsdToXsltEncoder.xsl"/>
+  <property name="powerpack.b4j.encoder.transform.path" value="${powerpack.encoder.src.path}/B4jSimpleEncoder.xsl"/>
+  <property name="powerpack.stacks.translation.transform.path" value="${powerpack.encoder.src.path}/ReplaceStacksInIsoB4J.xsl"/>
+  
+  <property name="powerpack.decoder.src.path" value="src/powerpack/decoder"/>
+  <property name="powerpack.decoder.generation.transform.path" value="${powerpack.decoder.src.path}/XsdToJavaDecoder.xsl"/>
+  <property name="powerpack.test.decoder.generation.transform.path" value="${powerpack.decoder.src.path}/XsdToJavaTestDecoder.xsl"/>
+  
+  <target name="generateEncoder" depends="validateSchema, getNewVersionNumber">
+    <echo message="[Using PowerPack] Generating Binary 4 Java Encoder (v. ${version.number})..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.encoder.transform.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${powerpack.encoder.generation.transform.path}"/>
+      <arg value="formatVersion=${version.number}"/>
+    </java>
+    <echo message="Done." />
+  </target>
+  
+  <target name="encoding" depends="generateEncoder, buildJavaExtension, validateData, getVersionNumber">
+    <echo message="[Using PowerPack] Encoding Binary for Java file from Input XML (v. ${version.number})..." />
+    
+    <!-- create intermediate file for debug -->
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.isob4j.path}.stk"/>
+      <arg value="${USER.input.data.path}"/>
+      <arg value="${generated.encoder.transform.path}"/>
+    </java>
+    
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.isob4j.path}"/>
+      <arg value="${generated.isob4j.path}.stk"/>
+      <arg value="${powerpack.stacks.translation.transform.path}"/>
+    </java>
+    
+    <!--
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.isob4j.path}"/>
+      <arg value="${USER.input.data.path}"/>
+      <arg value="${generated.encoder.transform.path}"/>
+    </java>
+    
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.isob4j.path}"/>
+      <arg value="${generated.isob4j.path}"/>
+      <arg value="${powerpack.stacks.translation.transform.path}"/>
+    </java>
+    -->
+    
+    <java classname="${xalan.class}" classpath="${encoder.java.extension.path}" fork="true">
+      <arg value="-IN"/><arg value="${generated.isob4j.path}"/>
+      <arg value="-XSL"/><arg value="${powerpack.b4j.encoder.transform.path}"/>
+      <arg value="-PARAM"/><arg value="b4jFileName"/><arg value="${generated.b4j.path}"/>
+      <arg value="-OUT"/><arg value="${generated.empty.path}"/>
+    </java>
+    <delete file="${generated.empty.path}" />
+    <echo message="Done." />
+  </target>
+  
+  <target name="generateLocalDecoder" depends="validateSchema, encoding, getVersionNumber">
+    <echo message="[Using PowerPack] Generating Java Decoder Locally (v. ${version.number})..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.decoder.isojava.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${powerpack.decoder.generation.transform.path}"/>
+      <arg value="formatVersion=${version.number}"/>
+      <arg value="packageName=${USER.decoder.java.package}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.decoder.path}"/>
+      <arg value="${generated.decoder.isojava.path}"/>
+      <arg value="${java.transform.path}"/>
+    </java>
+    <antcall target="indentJavaUsingArtisticStyle">
+      <param name="java.file.to.indent" value="${generated.decoder.path}"/>
+    </antcall>
+    <echo message="Done." />
+  </target>
+  
+  <target name="generateTestDecoder" depends="validateSchema, encoding, getVersionNumber">
+    <echo message="[Using PowerPack] Generating Java Test Decoder (v. ${version.number})..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${test.decoder.isojava.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${powerpack.test.decoder.generation.transform.path}"/>
+      <arg value="formatVersion=${version.number}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.test.decoder.src.path}"/>
+      <arg value="${test.decoder.isojava.path}"/>
+      <arg value="${java.transform.path}"/>
+    </java>
+    <antcall target="indentJavaUsingArtisticStyle">
+      <param name="java.file.to.indent" value="${generated.test.decoder.src.path}"/>
+    </antcall>
+    <javac srcdir="${decoder.output.path}" includes="${generated.test.decoder.src.name}" />
+    <echo message="Done." />
+  </target>
+  
+  
+  <!-- Xml Schemas -->
+  <property name="xml.schema.path" value="src/schema"/>
+  <property name="basic.schema.path" value="${xml.schema.path}/BasicXmlSchema.xsd"/>
+  <property name="actions.in.basic.schema.path" value="${xml.schema.path}/BasicXmlSchemaPlusSemanticActions.xsd"/>
+  
+  <property name="user.schema.path" value="${USER.schema.dir.path}/${USER.schema.name}" />
+  <property name="user.schema.backup.path" value="${user.schema.path}.bak" />
+  <property name="user.schema.backup.before.removing.annotations.path" value="${user.schema.path}.before.removing.annotations.bak" />
+  
+  <!-- templates output files -->
+  <property name="template.empty.schema.path" value="${xml.schema.path}/emptySchema.xsd"/>
+  <property name="template.mathFP.schema.path" value="${xml.schema.path}/mathFP.xsd"/>
+  <property name="template.include.idref.schema.path" value="${xml.schema.path}/idRefInclude.xsd"/>
+  <property name="template.ignore.idref.schema.path" value="${xml.schema.path}/idRefIgnore.xsd"/>
+  
+  <!-- transformation sheets -->
+  <property name="encoder.src.path" value="src/encoder"/>
+  <property name="encoder.generation.transform.path" value="${encoder.src.path}/XsdToXsltEncoder.xsl"/>
+  <property name="b4j.encoder.transform.path" value="${encoder.src.path}/B4jSimpleEncoder.xsl"/>
+  
+  <property name="decoder.src.path" value="src/decoder"/>
+  <property name="decoder.generation.transform.path" value="${decoder.src.path}/XsdToJavaDecoder.xsl"/>
+  <property name="test.decoder.generation.transform.path" value="${decoder.src.path}/XsdToJavaTestDecoder.xsl"/>
+  <property name="java.transform.path" value="${decoder.src.path}/IsoJavaToJava.xsl"/>
+  
+  <property name="utils.src.path" value="src/utils"/>
+  <property name="indent.transform.path" value="${utils.src.path}/xmlToIndent.xsl"/>
+  <property name="indent.and.clean.schema.transform.path" value="${utils.src.path}/IndentAndRemoveNamespaceHelpers.xsl"/>
+  <property name="pretty.print.transform.path" value="${pretty.print.path}/xmlverbatimwrapper.xsl"/>
+  
+  <property name="edit.src.path" value="src/edit"/>
+  <property name="add.types.transform.path" value="${edit.src.path}/XsdAddMissingTypes.xsl"/>
+  <property name="add.annotations.transform.path" value="${edit.src.path}/XsdAddAnnotations.xsl"/>
+  <property name="remove.annotations.transform.path" value="${edit.src.path}/XsdRemoveAnnotations.xsl"/>
+  
+  <!-- encoding output files -->
+  <property name="encoder.output.path" value="output/encoder"/>
+  <property name="generated.encoder.transform.path" value="${encoder.output.path}/IsoB4jEncoder.xsl"/>
+  <property name="generated.isob4j.path" value="${encoder.output.path}/simpleSample.isob4j.xml"/>
+  <property name="generated.b4j.name" value="simpleSample.b4j"/>
+  <property name="generated.b4j.path" value="${encoder.output.path}/${generated.b4j.name}"/>
+  <property name="generated.empty.path" value="${encoder.output.path}/empty.txt"/>
+  
+  <!-- decoding output files -->
+  <property name="decoder.output.path" value="output/decoder"/>  
+  <property name="generated.decoder.isojava.path" value="${decoder.output.path}/B4JDecoder.isojava.xml"/>
+  <property name="generated.decoder.path" value="${decoder.output.path}/B4JDecoder.java"/>
+  
+  <property name="generated.test.decoder.class.name" value="B4JTestDecoder"/>
+  <property name="generated.test.decoder.src.name" value="${generated.test.decoder.class.name}.java"/>
+  <property name="test.decoder.isojava.path" value="${decoder.output.path}/${generated.test.decoder.class.name}.isojava.xml"/>
+  <property name="generated.test.decoder.src.path" value="${decoder.output.path}/${generated.test.decoder.src.name}"/>
+  
+  <property name="test.decoded.b4j.path" value="${decoder.output.path}/${generated.b4j.name}.decoded.xml"/>
+  
+  <!-- documentation output files -->
+  <property name="doc.path" value="output/doc"/>
+  <property name="schema.xhtml.doc.path" value="${doc.path}/userSchema.html"/>
+
+  <!-- distrib -->
+  <property name="distrib.dir.path" value="distrib" />
+  <property name="distrib.zip.name" value="b4j-with-powerpack.zip" />
+  <property name="distrib.includes.pattern" value="build.xml encoder.version doc/** lib/** src/** usr/**" />
+  <property name="distrib.excludes.pattern" value="**/draft **/draft/** **/material **/material/**" />
+  
+  <!-- build number -->
+  <property name="build.number.property.path" value="encoder.version" />
+  
+  <!-- Startup tasks -->
+  
+  <target name="description">
+    <echo message="Available targets..." />
+    <echo message="Startup:        createEmptySchema, addSchemaTypes, " />
+    <echo message="                addSemanticActions, removeSemanticActions" />
+    <echo message="Schema Backup:  saveSchema, loadSchema" />
+    <echo message="Validation:     validateSchema, validateData" />
+    <echo message="Encoding:       buildJavaExtension, generateEncoder, encoding" />
+    <echo message="Decoding:       generateLocalDecoder, generateDecoder" />
+    <echo message="Test Decoding:  generateTestDecoder, testDecoding" />
+    <echo message="Documentation:  generatePrettyUserSchema" />
+    <echo message="Distrib:        zipCode" />
+  </target>
+  
+  <target name="checkIfUserSchemaExists">
+    <available property="schema.found.TRUE" file="${user.schema.path}" />
+  </target>
+  
+  <target name="createEmptySchema" unless="schema.found.TRUE" depends="checkIfUserSchemaExists, createEmptySchemaElse">
+    <echo message="Creating new schema..." />
+    <!--
+    <copy file="${template.empty.schema.path}" tofile="${user.schema.path}" />
+    -->
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${ant.file}"/>
+      <arg value="${template.empty.schema.path}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${indent.and.clean.schema.transform.path}"/>
+      <arg value="indentWithUnit=  "/>
+    </java>
+    
+    <copy file="${template.mathFP.schema.path}" todir="${USER.schema.dir.path}" />
+    <copy file="${template.include.idref.schema.path}" todir="${USER.schema.dir.path}" />
+    <copy file="${template.ignore.idref.schema.path}" todir="${USER.schema.dir.path}" />
+    <echo message="Done." />
+  </target>
+  <target name="createEmptySchemaElse" if="schema.found.TRUE" depends="checkIfUserSchemaExists">
+    <echo message="User schema was found at: ${user.schema.path}" />
+    <echo message="Nothing Done." />
+  </target>
+  
+  <target name="addSchemaTypes">
+    <echo message="Adding missing Complex and Simple Types in User Schema..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${add.types.transform.path}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${indent.transform.path}"/>
+      <arg value="indentWithUnit=  "/>
+    </java>
+    <echo message="Done." />
+  </target>
+  
+  <target name="addSemanticActions">
+    <echo message="Adding empty Semantic Actions in User Schema..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${add.annotations.transform.path}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${indent.transform.path}"/>
+      <arg value="indentWithUnit=  "/>
+    </java>
+    <echo message="Done." />
+  </target>
+  
+  <target name="removeSemanticActions">
+    <echo message="Removing All Semantic Actions from User Schema..." />
+    <echo message="(Original Schema is saved to ${user.schema.backup.before.removing.annotations.path})..." />
+    <copy file="${user.schema.path}" tofile="${user.schema.backup.before.removing.annotations.path}" overwrite="true"/>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${remove.annotations.transform.path}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${user.schema.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${indent.transform.path}"/>
+      <arg value="indentWithUnit=  "/>
+    </java>
+    <echo message="Done." />
+  </target>
+  
+  <!-- Backup Tasks -->
+  <target name="saveSchema">
+    <echo message="Saving User Schema to ${user.schema.backup.path}..." />
+    <copy file="${user.schema.path}" tofile="${user.schema.backup.path}" overwrite="true"/>
+    <echo message="Done." />
+  </target>
+  
+  <target name="loadSchema">
+    <echo message="Loading Saved User Schema from ${user.schema.backup.path}..." />
+    <copy file="${user.schema.backup.path}" tofile="${user.schema.path}" overwrite="true"/>
+    <echo message="Done." />
+  </target>
+  
+  <!-- Validation Tasks -->
+  
+  <target name="validateSchema">
+    <echo message="Validating User Defined Xml Schema against Basic Xml Schema..." />
+    <antcall target="validateDataUsingSunMSV"> <!-- better error explanations -->
+    <!-- <antcall target="validateDataUsingJing"> more accurate -->
+      <param name="param.xml.data" value="${user.schema.path}"/>
+      <param name="param.xml.schema" value="${actions.in.basic.schema.path}"/>
+    </antcall>
+    <echo message="Validating User Defined Xml Schema against Standard Xml Schema..." />
+    <antcall target="validateSchemaUsingJing">
+      <param name="param.xml.schema" value="${user.schema.path}"/>
+    </antcall>
+    <echo message="Done." />
+  </target>
+  
+  <target name="validateData">
+    <echo message="Validating User Defined Data against User Defined Xml Schema..." />
+    <antcall target="validateDataUsingJing">
+      <param name="param.xml.data" value="${USER.input.data.path}"/>
+      <param name="param.xml.schema" value="${user.schema.path}"/>
+    </antcall>
+    <echo message="Done." />
+  </target>
+  
+  <!-- Encoding Tasks -->
+  
+  <target name="getNewVersionNumber" if="USER.include.version.number.TRUE" depends="VersionNumberDisabled">
+    <buildnumber file="${build.number.property.path}"/>
+    <property name="version.number" value="${build.number}" />
+  </target>
+  <target name="VersionNumberDisabled" unless="USER.include.version.number.TRUE">
+    <property name="version.number" value="DISABLED" />
+  </target>
+  
+  <target name="getVersionNumber" if="version.number" depends="VersionNumberMissing"/>
+  <target name="VersionNumberMissing" unless="version.number">
+    <property name="version.number" value="DISABLED" />
+  </target>
+  
+  <target name="generateEncoder" depends="validateSchema, getNewVersionNumber">
+    <echo message="Generating Binary 4 Java Encoder (v. ${version.number})..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.encoder.transform.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${encoder.generation.transform.path}"/>
+      <arg value="formatVersion=${version.number}"/>
+    </java>
+    <echo message="Done." />
+  </target>
+  
+  <target name="buildJavaExtension">
+    <echo message="Building Java Extension Class for Encoding through XSLT..." />
+    <javac srcdir="${encoder.java.extension.path}" classpath="${encoder.java.extension.path}"/>
+    <echo message="Done." />
+  </target>
+  
+  <target name="encoding" depends="generateEncoder, buildJavaExtension, validateData, getVersionNumber">
+    <echo message="Encoding Binary for Java file from Input XML (v. ${version.number})..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.isob4j.path}"/>
+      <arg value="${USER.input.data.path}"/>
+      <arg value="${generated.encoder.transform.path}"/>
+    </java>
+    
+    <java classname="${xalan.class}" classpath="${encoder.java.extension.path}" fork="true">
+      <arg value="-IN"/><arg value="${generated.isob4j.path}"/>
+      <arg value="-XSL"/><arg value="${b4j.encoder.transform.path}"/>
+      <arg value="-PARAM"/><arg value="b4jFileName"/><arg value="${generated.b4j.path}"/>
+      <arg value="-OUT"/><arg value="${generated.empty.path}"/>
+    </java>
+    <delete file="${generated.empty.path}" />
+    <echo message="Done." />
+  </target>
+  
+  <!-- Decoding Tasks -->
+  
+  <target name="generateLocalDecoder" depends="validateSchema, encoding, getVersionNumber">
+    <echo message="Generating Java Decoder Locally (v. ${version.number})..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.decoder.isojava.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${decoder.generation.transform.path}"/>
+      <arg value="formatVersion=${version.number}"/>
+      <arg value="packageName=${USER.decoder.java.package}"/>
+    </java>
+    
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.decoder.path}"/>
+      <arg value="${generated.decoder.isojava.path}"/>
+      <arg value="${java.transform.path}"/>
+    </java>
+    
+    <antcall target="indentJavaUsingArtisticStyle">
+      <param name="java.file.to.indent" value="${generated.decoder.path}"/>
+    </antcall>
+    
+    <echo message="Done." />
+  </target>
+  
+  <target name="generateDecoder" depends="generateLocalDecoder">
+    <echo message="Copying Generated Java Decoder to External Project..." />
+    <copy file="${generated.decoder.path}" todir="${USER.java.package.dir.path}" />
+    <echo message="Done." />
+  </target>
+  
+  <!-- Test Decoding Tasks -->
+  
+  <target name="generateTestDecoder" depends="validateSchema, encoding, getVersionNumber">
+    <echo message="Generating Java Test Decoder (v. ${version.number})..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${test.decoder.isojava.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${test.decoder.generation.transform.path}"/>
+      <arg value="formatVersion=${version.number}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${generated.test.decoder.src.path}"/>
+      <arg value="${test.decoder.isojava.path}"/>
+      <arg value="${java.transform.path}"/>
+    </java>
+    <antcall target="indentJavaUsingArtisticStyle">
+      <param name="java.file.to.indent" value="${generated.test.decoder.src.path}"/>
+    </antcall>
+    <javac srcdir="${decoder.output.path}" includes="${generated.test.decoder.src.name}" />
+    <echo message="Done." />
+  </target>
+  
+  <target name="testDecoding" depends="generateTestDecoder">
+    <echo message="Decoding Binary for Java file (v. ${version.number})..." />
+    <java classname="${generated.test.decoder.class.name}" classpath="${decoder.output.path}" fork="true">
+      <arg value="${generated.b4j.path}"/>
+      <arg value="${test.decoded.b4j.path}.noindent"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${test.decoded.b4j.path}"/>
+      <arg value="${test.decoded.b4j.path}.noindent"/>
+      <arg value="${indent.transform.path}"/>
+    </java>
+    <!-- DEBUG
+    <delete file="${test.decoded.b4j.path}.noindent" />
+    -->
+    <echo message="Done." />
+  </target>
+  
+  <!-- documentation tasks -->
+  <target name="copyPrettyPrintCSS">
+    <copy file="${pretty.print.css.path}" todir="${doc.path}" />
+  </target>
+  
+  <target name="generatePrettyUserSchema" depends="copyPrettyPrintCSS">
+    <echo message="Generating XHTML page for User Xml Schema..." />
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${schema.xhtml.doc.path}"/>
+      <arg value="${user.schema.path}"/>
+      <arg value="${pretty.print.transform.path}"/>
+    </java>
+    <echo message="Done." />
+  </target>
+  
+  <!-- distrib -->
+  <target name="zipCode">
+    <tstamp>
+      <format property="std-date-today" pattern="yyyy-MM-dd" locale="en"/>
+    </tstamp>
+    <zip destfile="${distrib.dir.path}\${std-date-today}-${distrib.zip.name}" update="no">
+      <zipfileset dir="." includes="${distrib.includes.pattern}" excludes="${distrib.excludes.pattern}" prefix="b4j"/>
+    </zip>
+  </target>
+  
+</project>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Chapter 2: Configuring the B4J tool...</title>
+  </head>
+  <body>
+    <h1>Chapter 2: Setup</h1>
+      <p>
+        The b4j\usr directory contains sample grammar and data files. You should create a folder named sample 
+        and put all this stuff in, to clean the place for your own project.
+      </p>
+      <h2>Game data</h2>
+        <p>
+          Copy the <a href="../chapter1/gameData.xml">game data file</a> to b4j\usr.
+        </p>
+      <h2>Setting up your project properties</h2>
+        <p>
+          Open the b4j\build.xml file and set the user properties, in the beginning.
+          If you use the Notepad or an UTF-8 editor, you should change the first line to 
+          <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</pre>
+          <i>Cheat: <a href="build.xml">HERE</a> is the resulting build file.</i>
+        </p>
+      <h2>Your first Schema</h2>
+        <p>
+          You can now generate your first schema using <pre>ant createEmptySchema</pre>
+          from b4j dir. In usr dir, a <a href="GuessMeRight.xsd">GuessMeRight.xsd</a> file was created, which
+          is the one you will work on from now, with three other xml schema files you don't need
+          to care too much about.
+        </p>
+        <p>
+          GuessMeRight.xsd is not a valid XML Schema file for now, but it will be at the end
+          of next chapter.
+        </p>
+      <h2>Next</h2>
+        <p>
+        Go on to <a href="../chapter3/index.html">Chapter 3...</a><br />
+        or back to <a href="../chapter1/index.html">Chapter 1.</a>
+        </p>
+  </body>
+</html>
