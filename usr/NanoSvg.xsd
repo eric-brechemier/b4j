@@ -158,7 +158,7 @@
     -->
     <xsd:sequence>
       <xsd:element ref="svg:defs" minOccurs="0"/>
-      <xsd:element ref="svg:content"/>
+      <xsd:element ref="svg:content" minOccurs="1" maxOccurs="1"/>
     </xsd:sequence>
     <xsd:attribute name="width" type="svg:Distance"/>
     <xsd:attribute name="height" type="svg:Distance"/>
