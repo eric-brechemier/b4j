@@ -113,6 +113,11 @@
     <property name="encoder.java.extension.path" value="src/encoder/java"/>
     <property name="encoder.java.extension.classpath" value="${{fp.jar.path}};${{encoder.java.extension.path}}"/>
     
+    <xsl:comment> Xerces-J </xsl:comment>
+    <property name="xml-apis.jar.path" value="${{lib.path}}/xerces-j-2.6.2/xml-apis.jar"/>
+    <property name="xercesImpl.jar.path" value="${{lib.path}}/xerces-j-2.6.2/xercesImpl.jar"/>
+    <property name="xerces-j.classpath" value="${{xml-apis.jar.path}};${{xercesImpl.jar.path}}"/>
+    
     <xsl:comment> James Clark Jing, a validator for RELAX NG and other schema languages </xsl:comment>
     <property name="jing.jar" value="{'${lib.path}/jing-20030619/jing.jar'}"/>
     
