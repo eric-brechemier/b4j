@@ -194,14 +194,22 @@ public class JavaEncoder
    
    public static void writeFloat(float data) throws IOException
    {
+      // WORK IN PROGRES: soon replaced by:
+      _singleton.output.writeFloat(data);
+      
       // encoding with FPLib
       writeFloatString( Float.toString(data) );
+      // deprecated, use writeFloatString instead
    }
    
    public static void writeDouble(double data) throws IOException
    {
+      // WORK IN PROGRES: soon replaced by:
+      // _singleton.output.writeDouble(data);
+      
       // encoding with FPLib
       writeFloatString( Double.toString(data) );
+      // deprecated, use writeFloatString instead
    }
    
    public static void writeStringUTF(String data) throws IOException
