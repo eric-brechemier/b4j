@@ -27,10 +27,12 @@
         <a4j:onDocumentStart>
           // User Java Code
         </a4j:onDocumentStart>
+        <!--
         <a4j:onEachChildEnd fromChild="RootType root">
-          // User Java Code
-          // e.g. document = root;
+        // User Java Code
+        // e.g. document = root;
         </a4j:onEachChildEnd>
+        -->
         <a4j:onDocumentEnd>
           // User Java Code
         </a4j:onDocumentEnd>
@@ -131,10 +133,12 @@
             // e.g. ChildType[] children = new ChildType[childCount];
             //      currentElement.setChildren(children);
           </a4j:onChildrenCount>
+          <!--
           <a4j:onEachChildEnd fromChild="ChildType child" position="i">
-            // User Java Code
-            // e.g. children[i]=child;
+          // User Java Code
+          // e.g. children[i]=child;
           </a4j:onEachChildEnd>
+          -->
           <a4j:onElementEnd>
             // User Java Code
           </a4j:onElementEnd>
@@ -191,10 +195,12 @@
             // e.g. ChildType[] children = new ChildType[childCount];
             //      currentElement.setChildren(children);
           </a4j:onChildrenCount>
+          <!--
           <a4j:onEachChildEnd fromChild="ChildType child" position="i">
-            // User Java Code
-            // e.g. children[i]=child;
+          // User Java Code
+          // e.g. children[i]=child;
           </a4j:onEachChildEnd>
+          -->
           <a4j:onElementEnd>
             // User Java Code
           </a4j:onElementEnd>
@@ -242,10 +248,12 @@
             // e.g. ChildType[] children = new ChildType[childCount];
             //      currentElement.setChildren(children);
           </a4j:onChildrenCount>
+          <!--
           <a4j:onEachChildEnd fromChild="ChildType child" position="i">
-            // User Java Code
-            // e.g. children[i]=child;
+          // User Java Code
+          // e.g. children[i]=child;
           </a4j:onEachChildEnd>
+          -->
           <a4j:onElementEnd>
             // User Java Code
           </a4j:onElementEnd>
@@ -341,10 +349,12 @@
             // e.g. ChildType[] children = new ChildType[childCount];
             //      currentElement.setChildren(children);
           </a4j:onChildrenCount>
+          <!--
           <a4j:onEachChildEnd fromChild="ChildType child" position="i">
-            // User Java Code
-            // e.g. children[i]=child;
+          // User Java Code
+          // e.g. children[i]=child;
           </a4j:onEachChildEnd>
+          -->
           <a4j:onElementEnd>
             // User Java Code
           </a4j:onElementEnd>
