@@ -215,19 +215,19 @@
           <xsl:when test="$typeName = 'float'">
             <xsl:apply-templates mode="processFloatValue" select="." />
           </xsl:when>
-          <xsl:when test="$typeName = 'radAngle'">
+          <xsl:when test="$typeName = 'degToRadAngle'">
             <xsl:apply-templates mode="processRadAngleValue" select="." />
           </xsl:when>
-          <xsl:when test="$typeName = 'cosRadAngle'">
+          <xsl:when test="$typeName = 'degToCosAngle'">
             <xsl:apply-templates mode="processCosRadAngleValue" select="." />
           </xsl:when>
-          <xsl:when test="$typeName = 'sinRadAngle'">
+          <xsl:when test="$typeName = 'degToSinAngle'">
             <xsl:apply-templates mode="processSinRadAngleValue" select="." />
           </xsl:when>
-          <xsl:when test="$typeName = 'minusCosRadAngle'">
+          <xsl:when test="$typeName = 'degToMinusCosAngle'">
             <xsl:apply-templates mode="processCosRadAngleValue" select="." />
           </xsl:when>
-          <xsl:when test="$typeName = 'minusSinRadAngle'">
+          <xsl:when test="$typeName = 'degToMinusSinAngle'">
             <xsl:apply-templates mode="processSinRadAngleValue" select="." />
           </xsl:when>
           <xsl:otherwise>
