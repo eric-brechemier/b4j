@@ -66,6 +66,11 @@ public class JarURIResolver implements URIResolver {
       return resolvePath(href,baseWithoutLocator);
     }
     
+    if ( base.startsWith("http://") ) {
+      String baseWithoutLocator = substringAfter(base,"http://");
+      return resolvePath(href,baseWithoutLocator);
+    }
+    
     if ( !base.startsWith("/") ) {
       return resolvePath(href,"/"+base);
     }
