@@ -177,6 +177,8 @@
       <property name="powerpack.decoder.src.path" value="src/powerpack/decoder"/>
       <property name="powerpack.decoder.generation.transform.path" value="{'${powerpack.decoder.src.path}/XsdToJavaDecoder.xsl'}"/>
       <property name="powerpack.test.decoder.generation.transform.path" value="{'${powerpack.decoder.src.path}/XsdToJavaTestDecoder.xsl'}"/>
+      
+      <property name="powerpack.generated.encoder.jar.name" value="${{USER.namespace.prefix}}-b4j.jar"/>
     </xsl:if>
     
     <xsl:comment> Xml Schemas </xsl:comment>
@@ -639,6 +641,19 @@
         <zipfileset dir="." includes="${{distrib.includes.pattern}}" excludes="${{distrib.excludes.pattern}}" prefix="b4j"/>
       </zip>
     </target>
+    
+    <xsl:if test="$isPowerPackVersion">
+      
+      <target name="packageEncoderLib" depends="generateDecoder">
+        <jar destfile="${{distrib.dir.path}}/${{powerpack.generated.encoder.jar.name}}">
+          <fileset dir="${{encoder.java.extension.path}}" excludes="**/*.java" />
+          <fileset dir="${{powerpack.encoder.java.extension.path}}" excludes="**/*.java" />
+          <zipfileset prefix="xslt" file="${{generated.encoder.transform.path}}" />
+          <zipfileset prefix="xslt" dir="${{xslt.src.path}}" excludes="**/*.java **/java **/java/**  **/ant **/ant/* **/schema **/schema/* **/edit **/edit/* **/prettyPrint **/prettyPrint/*" />
+        </jar>
+      </target>
+      
+    </xsl:if>
     
   </project>
 </xsl:template>
