@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<svg xmlns='http://eric.brechemier.name/2004/femtosvg'
+     width='-1' height='-1' 
+     viewBox_x='0'
+     viewBox_y='0'
+     viewBox_width='800'
+     viewBox_height='800'
+>
+  <rect x='0' y='-8' width='26' height='16'/>
+  <circle cx='0' cy='0' r='8'/>
+  <g id='0'>
+    <text x='50' y='20'>Search for Clips</text>
+  </g>
+</svg>
