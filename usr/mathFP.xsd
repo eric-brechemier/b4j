@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   xmlns:mathFP="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/"
+   targetNamespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/"
+   elementFormDefault="qualified"
+>
+  <xsd:annotation>
+    <xsd:documentation>
+      Xml Shema to define a MathFP fixed point integer (for float calulations on mobile phone).
+      MathFP: developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <!-- elements: none -->
+  
+  <!-- complex types: none -->
+  
+  <!-- simple types: custom codecs -->
+  <xsd:simpleType name="float">
+    <xsd:restriction base="xsd:float" />
+  </xsd:simpleType>
+  
+</xsd:schema>
