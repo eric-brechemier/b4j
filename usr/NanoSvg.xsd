@@ -1,0 +1,1125 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ignore="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" xmlns:include="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" xmlns:mathFP="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config" xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" xmlns:svg="http://eric.brechemier.name/2004/NanoSvg" targetNamespace="http://eric.brechemier.name/2004/NanoSvg" elementFormDefault="qualified">
+  <xsd:annotation>
+    <xsd:documentation>
+      *** Credits ***
+      This Xml Schema: Your Name, Month 2004
+      
+      Tools and Concept: Eric Bréchemier
+      MathFP: developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/
+    </xsd:documentation>
+    <xsd:appinfo>
+      <config:root element="svg"/>
+      <a4j:packages>
+        // Java imports
+      </a4j:packages>
+      <a4j:globalDef>
+        // Global _static_ attributes and _static_ methods declarations for Decoder Class
+      </a4j:globalDef>
+      <a4j:events>
+        <a4j:context>
+          <!--
+          <a4j:fromParent>short param, int otherParam,...</a4j:fromParent>
+          <a4j:parentContinuation returnType="GlobalDocumentType" returnVariable="document"/>
+          <a4j:childContinuation>null, otherParam,...</a4j:childContinuation>
+          -->
+        </a4j:context>
+        <a4j:onDocumentStart>
+          // User Java Code
+        </a4j:onDocumentStart>
+        <a4j:onEachChildEnd fromChild="RootType root">
+          // User Java Code
+          // e.g. document = root;
+        </a4j:onEachChildEnd>
+        <a4j:onDocumentEnd>
+          // User Java Code
+        </a4j:onDocumentEnd>
+        <!--
+        <a4j:onError name="e">
+        
+        </a4j:onError>
+        -->
+      </a4j:events>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" schemaLocation="idRefIgnore.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" schemaLocation="idRefInclude.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/NanoXForms" schemaLocation="NanoXForms.xsd"/>
+  <!--
+  elements: User Vocabulary
+  -->
+  <!--
+  Using ant addSchemaTypes, missing complexTypes will be created for all elements:
+  - a simple type when type="st"
+  e.g. <xsd:element name="USERelement" type="st" />
+  - a complex type when type attribute is missing
+  e.g. <xsd:element name="USERelement" />
+  - a complex type with name after ':' when a qualified name is provided
+  e.g. <xsd:element name="USERelement" type="USERPrefix:TypeName" />
+  -->
+  <xsd:element name="svg" type="svg:Svg">
+    <xsd:unique name="elementsId">
+      <xsd:selector xpath=".//svg:use | .//svg:g | .//svg:a | .//svg:text | .//svg:flowRoot | .//svg:rect                 | .//svg:circle | .//svg:ellipse | .//svg:image | .//svg:polyline | .//svg:polygon"/>
+      <xsd:field xpath="@id"/>
+    </xsd:unique>
+    <xsd:keyref name="useKeyRef" refer="svg:elementsId">
+      <xsd:selector xpath=".//svg:use"/>
+      <xsd:field xpath="@href"/>
+    </xsd:keyref>
+  </xsd:element>
+  <xsd:element name="defs" type="svg:Defs"/>
+  <xsd:element name="content" type="svg:Content"/>
+  <xsd:element name="use" type="svg:Use"/>
+  <xsd:element name="g" type="svg:G"/>
+  <xsd:element name="a" type="svg:A"/>
+  <xsd:element name="text" type="svg:Text"/>
+  <xsd:element name="flowRoot" type="svg:FlowRoot"/>
+  <xsd:element name="flowRegion" type="svg:FlowRegion"/>
+  <xsd:element name="flowPara" type="svg:FlowPara"/>
+  <xsd:element name="rect" type="svg:Rect"/>
+  <xsd:element name="circle" type="svg:Circle"/>
+  <xsd:element name="ellipse" type="svg:Ellipse"/>
+  <xsd:element name="image" type="svg:Image"/>
+  <xsd:element name="polyline" type="svg:Polyline"/>
+  <xsd:element name="polygon" type="svg:Polygon"/>
+  <xsd:element name="points" type="svg:Points"/>
+  <xsd:element name="point" type="svg:Point"/>
+  <xsd:element name="transforms" type="svg:Transforms"/>
+  <xsd:element name="translate" type="svg:Translate"/>
+  <xsd:element name="scale" type="svg:Scale"/>
+  <xsd:element name="rotate" type="svg:Rotate"/>
+  <xsd:element name="animations" type="svg:Animations"/>
+  <xsd:element name="animate" type="svg:Animate"/>
+  <xsd:element name="animateTransform" type="svg:AnimateTransform"/>
+  <xsd:element name="animateColor" type="svg:AnimateColor"/>
+  <xsd:element name="triggers" type="svg:Triggers"/>
+  <xsd:element name="trigger" type="svg:Trigger"/>
+  <xsd:element name="listeners" type="svg:Listeners"/>
+  <xsd:element name="listener" type="svg:Listener"/>
+  <!--
+  complexTypes defining tree structure: User Grammar
+  NOTA there are no simpleTypes defs for now, but they may be used for custom codec in future versions.
+  -->
+  <!--
+  Using ant addSchemaAnnotations, missing annotations are added to schema & complex types
+  -->
+  <xsd:complexType name="Svg">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            // User Java Code
+            // e.g. ChildType[] children = new ChildType[childCount];
+            //      currentElement.setChildren(children);
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd fromChild="ChildType child" position="i">
+            // User Java Code
+            // e.g. children[i]=child;
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--problem: choice not allowed in sequence
+    Solutions: include sequence elements in choice
+    Extend children handling to be able to process a subset of children as a sequence
+    and another one as a choice.
+    This is not very difficult, but children counts in sequence must be rewritten sequentially
+    (on contrary to global counts using count() )
+    
+    Moreover, optional elements and mandatory elements should be handled differently:
+    optional elements should be included in mask like optional attributes
+    and mandatory elements should just be processed without any count.
+    -->
+    <xsd:sequence>
+      <xsd:element ref="svg:defs" minOccurs="0"/>
+      <xsd:element ref="svg:content"/>
+    </xsd:sequence>
+    <xsd:attribute name="width" type="svg:Distance"/>
+    <xsd:attribute name="height" type="svg:Distance"/>
+    <xsd:attribute name="viewBox_x" type="svg:Distance"/>
+    <xsd:attribute name="viewBox_y" type="svg:Distance"/>
+    <xsd:attribute name="viewBox_width" type="svg:Distance"/>
+    <xsd:attribute name="viewBox_height" type="svg:Distance"/>
+    <xsd:attribute name="background-fill" type="svg:Color"/>
+  </xsd:complexType>
+  <xsd:complexType name="Defs">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            // User Java Code
+            // e.g. ChildType[] children = new ChildType[childCount];
+            //      currentElement.setChildren(children);
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd fromChild="ChildType child" position="i">
+            // User Java Code
+            // e.g. children[i]=child;
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+      <xsd:element ref="svg:use"/>
+      <xsd:element ref="svg:g"/>
+      <xsd:element ref="svg:a"/>
+      <xsd:element ref="svg:text"/>
+      <xsd:element ref="svg:flowRoot"/>
+      <xsd:element ref="svg:rect"/>
+      <xsd:element ref="svg:circle"/>
+      <xsd:element ref="svg:ellipse"/>
+      <xsd:element ref="svg:image"/>
+      <xsd:element ref="svg:polyline"/>
+      <xsd:element ref="svg:polygon"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="Content">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            // User Java Code
+            // e.g. ChildType[] children = new ChildType[childCount];
+            //      currentElement.setChildren(children);
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd fromChild="ChildType child" position="i">
+            // User Java Code
+            // e.g. children[i]=child;
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+      <xsd:element ref="svg:use"/>
+      <xsd:element ref="svg:g"/>
+      <xsd:element ref="svg:a"/>
+      <xsd:element ref="svg:text"/>
+      <xsd:element ref="svg:flowRoot"/>
+      <xsd:element ref="svg:rect"/>
+      <xsd:element ref="svg:circle"/>
+      <xsd:element ref="svg:ellipse"/>
+      <xsd:element ref="svg:image"/>
+      <xsd:element ref="svg:polyline"/>
+      <xsd:element ref="svg:polygon"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="Use">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            -->
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <!--
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+            <a4j:publish topic="useKeyRef" referree="currentElementAsReferree"/>
+            <a4j:subscribe topic="useKeyRef" referrer="currentElementAsReferrer"/>
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+            Element currentElementAsReferree = currentElement;
+            Element currentElementAsReferrer = currentElement;
+            
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+        <a4j:topic keyref="useKeyRef">
+          <a4j:context>
+            <a4j:fromReferree object="ReferreeType referree"/>
+            <a4j:fromReferrer object="ReferrerType referrer"/>
+          </a4j:context>
+          <a4j:onMessage>
+            // User Java Code
+            // e.g. referrer.setTarget( referree );
+          </a4j:onMessage>
+        </a4j:topic>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="ignore:Id"/>
+    <xsd:attribute name="href" type="ignore:IdRef" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="G">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            // User Java Code
+            // e.g. ChildType[] children = new ChildType[childCount];
+            //      currentElement.setChildren(children);
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd fromChild="ChildType child" position="i">
+            // User Java Code
+            // e.g. children[i]=child;
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element ref="svg:content"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="ignore:Id"/>
+    <xsd:attribute name="includeFile" type="ignore:FileName" />
+  </xsd:complexType>
+  <xsd:complexType name="A">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Text">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onValueEnd alias="textValue">
+            // User Java Code
+            // e.g. currentElement.text = textValue;
+          </a4j:onValueEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="id" type="ignore:Id"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="FlowRoot">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="FlowRegion">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="FlowPara">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Rect">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Circle">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Ellipse">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Image">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Polyline">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Polygon">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Points">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Point">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Transforms">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Translate">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Scale">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Rotate">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Animations">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Animate">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="AnimateTransform">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="AnimateColor">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Triggers">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Trigger">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Listeners">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <xsd:complexType name="Listener">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <!--<xsd:attribute name="id" type="xsd:string" />-->
+  </xsd:complexType>
+  <!--simple types: renaming basic types-->
+  <xsd:simpleType name="Distance">
+    <xsd:restriction base="mathFP:float"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="Color">
+    <xsd:restriction base="xsd:unsignedInt"/>
+  </xsd:simpleType>
+</xsd:schema>
