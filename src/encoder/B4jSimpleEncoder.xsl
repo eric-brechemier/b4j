@@ -78,68 +78,68 @@
   
   <!-- one rule for each encoding method in Java encoding class -->
   <xsl:template match="isob4j:boolean">
-    <xsl:variable name="Action_doEncode_boolean" select="xmlbin:JavaEncoder.writeBoolean(.)"/>
+    <xsl:variable name="Action_doEncode_boolean" select="xmlbin:JavaEncoder.writeBoolean(boolean(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:byte">
-    <xsl:variable name="Action_doEncode_byte" select="xmlbin:JavaEncoder.writeByte(.)"/>
+    <xsl:variable name="Action_doEncode_byte" select="xmlbin:JavaEncoder.writeByte(number(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:mask">
     <xsl:variable name="Action_doEncode_mask" 
       select="xmlbin:JavaEncoder.writeMaskByte(
-            @bit1,@bit2,@bit3,@bit4,
-            @bit5,@bit6,@bit7,@bit8)"
+            number(@bit1),number(@bit2),number(@bit3),number(@bit4),
+            number(@bit5),number(@bit6),number(@bit7),number(@bit8) )"
     />
   </xsl:template>
   
   <xsl:template match="isob4j:short">
-    <xsl:variable name="Action_doEncode_short" select="xmlbin:JavaEncoder.writeShort(.)"/>
+    <xsl:variable name="Action_doEncode_short" select="xmlbin:JavaEncoder.writeShort(number(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:int">
-    <xsl:variable name="Action_doEncode_int" select="xmlbin:JavaEncoder.writeInt(.)"/>
+    <xsl:variable name="Action_doEncode_int" select="xmlbin:JavaEncoder.writeInt(number(.))"/>
   </xsl:template>
   
   <!-- for alpha colors use unsignedInt -->
   <xsl:template match="isob4j:unsignedInt">
-    <xsl:variable name="Action_doEncode_unsignedInt" select="xmlbin:JavaEncoder.writeUnsignedIntFromLong(.)"/>
+    <xsl:variable name="Action_doEncode_unsignedInt" select="xmlbin:JavaEncoder.writeUnsignedIntFromLong(number(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:long">
-    <xsl:variable name="Action_doEncode_long" select="xmlbin:JavaEncoder.writeLong(.)"/>
+    <xsl:variable name="Action_doEncode_long" select="xmlbin:JavaEncoder.writeLong(number(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:radAngle">
-    <xsl:variable name="Action_doEncode_radAngle" select="xmlbin:JavaEncoder.writeRadAngleString(.)"/>
+    <xsl:variable name="Action_doEncode_radAngle" select="xmlbin:JavaEncoder.writeRadAngleString(string(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:cosRadAngle">
-    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeCosAngleString(.)"/>
+    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeCosAngleString(string(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:sinRadAngle">
-    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeSinAngleString(.)"/>
+    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeSinAngleString(string(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:minusCosRadAngle">
-    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeMinusCosAngleString(.)"/>
+    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeMinusCosAngleString(string(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:minusSinRadAngle">
-    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeMinusSinAngleString(.)"/>
+    <xsl:variable name="Action_doEncode_" select="xmlbin:JavaEncoder.writeMinusSinAngleString(string(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:float">
-    <xsl:variable name="Action_doEncode_float" select="xmlbin:JavaEncoder.writeFloatString(.)"/>
+    <xsl:variable name="Action_doEncode_float" select="xmlbin:JavaEncoder.writeFloatString(string(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:double">
-    <xsl:variable name="Action_doEncode_double" select="xmlbin:JavaEncoder.writeDouble(.)"/>
+    <xsl:variable name="Action_doEncode_double" select="xmlbin:JavaEncoder.writeDouble(number(.))"/>
   </xsl:template>
   
   <xsl:template match="isob4j:string">
-    <xsl:variable name="Action_doEncode_string" select="xmlbin:JavaEncoder.writeStringUTF(.)"/>
+    <xsl:variable name="Action_doEncode_string" select="xmlbin:JavaEncoder.writeStringUTF(string(.))"/>
   </xsl:template>
   
   <xsl:template match="text()" />
