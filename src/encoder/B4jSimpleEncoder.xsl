@@ -10,6 +10,7 @@
    xmlns:java="http://xml.apache.org/xalan/java"
    xmlns:xmlbin="xalan://name.brechemier.eric"
 >
+
   <!-- name (with or without path) of encoded file, with extension -->
   <xsl:param name="b4jFileName" select="'./output/defaultOutput.b4j'"/>
   
