@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava"
+   targetNamespace="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava"
+   elementFormDefault="qualified"
+>
+  <xsd:annotation>
+    <xsd:documentation>
+      Actions for Java:
+      User Defined Semantic Actions in Java for Binary For Java Encoder/Decoder Generator.
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <!-- elements: vocabulary -->
+  <xsd:element name="packages" type="a4j:JavaSourceCode" />
+  <xsd:element name="globalDef" type="a4j:JavaSourceCode" />
+  
+  <xsd:element name="context" type="a4j:Context" />
+  <xsd:element name="fromParent" type="a4j:JavaSourceCode" />
+  <xsd:element name="parentContinuation" type="a4j:ParentContinuation" />
+  <xsd:element name="childContinuation" type="a4j:JavaSourceCode" />
+  
+  <xsd:element name="publish" type="a4j:Publish" />
+  <xsd:element name="subscribe" type="a4j:Subscribe" />
+  
+  <xsd:element name="topic" type="a4j:Topic" />
+  <xsd:element name="fromReferree" type="a4j:FromRefer" />
+  <xsd:element name="fromReferrer" type="a4j:FromRefer" />
+  <xsd:element name="onMessage" type="a4j:JavaSourceCode" />
+  
+  <xsd:element name="events" type="a4j:Events" />
+  <xsd:element name="onDocumentStart" type="a4j:JavaSourceCode" />
+  <xsd:element name="onDocumentEnd" type="a4j:JavaSourceCode" />
+  <xsd:element name="onError" type="a4j:OnError" />
+  
+  <xsd:element name="onElementStart" type="a4j:JavaSourceCode" />
+  <xsd:element name="onElementEnd" type="a4j:JavaSourceCode" />
+  
+  <xsd:element name="onAttributesEnd" type="a4j:JavaSourceCode" />
+  <xsd:element name="onValueEnd" type="a4j:OnValueEnd" />
+  
+  <xsd:element name="onChildrenCount" type="a4j:OnChildrenCount" />
+  <xsd:element name="onEachChildEnd" type="a4j:OnEachChildEnd" />
+  
+  <!-- complex types: grammar -->
+  <xsd:complexType name="JavaSourceCode">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Context">
+    <xsd:sequence>
+      <xsd:element ref="a4j:fromParent" minOccurs="0"/>
+      <xsd:element ref="a4j:parentContinuation" minOccurs="0"/>
+      <xsd:element ref="a4j:childContinuation" minOccurs="0"/>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="a4j:publish" />
+        <xsd:element ref="a4j:subscribe" />
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="ParentContinuation">
+    <xsd:attribute name="returnType" type="xsd:NCName" use="required"/>
+    <xsd:attribute name="returnVariable" type="xsd:NCName" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Publish">
+    <xsd:attribute name="topic" type="xsd:NCName" use="required"/>
+    <xsd:attribute name="referree" type="xsd:NCName" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Subscribe">
+    <xsd:attribute name="topic" type="xsd:NCName" use="required"/>
+    <xsd:attribute name="referrer" type="xsd:NCName" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="FromRefer">
+    <xsd:attribute name="object" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Topic">
+    <xsd:sequence>
+      <xsd:element name="context">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="a4j:fromReferree" />
+            <xsd:element ref="a4j:fromReferrer" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element ref="a4j:onMessage" />
+    </xsd:sequence>
+    <xsd:attribute name="keyref" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Events">
+    <xsd:sequence>
+      <xsd:element ref="a4j:context" />
+      <xsd:choice>
+        <xsd:sequence>
+          <xsd:element ref="a4j:onDocumentStart" />
+          <xsd:element ref="a4j:onEachChildEnd" minOccurs="0" />
+          <xsd:element ref="a4j:onDocumentEnd" />
+          <xsd:element ref="a4j:onError" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:sequence>
+          <xsd:element ref="a4j:onElementStart" />
+          <xsd:element ref="a4j:onAttributesEnd" minOccurs="0" />
+          <xsd:element ref="a4j:onValueEnd" minOccurs="0" />
+          <xsd:element ref="a4j:onChildrenCount" minOccurs="0" />
+          <xsd:element ref="a4j:onEachChildEnd" minOccurs="0" />
+          <xsd:element ref="a4j:onElementEnd" />
+        </xsd:sequence>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="OnError">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="a4j:VariableName" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  
+  <xsd:complexType name="OnChildrenCount">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="alias" type="a4j:VariableName" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  
+  <xsd:complexType name="OnEachChildEnd">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="fromChild" type="a4j:VariableDeclaration" />
+        <xsd:attribute name="position" type="a4j:VariableName" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  
+  <xsd:complexType name="OnValueEnd">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="alias" type="a4j:VariableName" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  
+  <!-- simple types -->
+  <xsd:simpleType name="VariableName">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="VariableDeclaration">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  
+</xsd:schema>
