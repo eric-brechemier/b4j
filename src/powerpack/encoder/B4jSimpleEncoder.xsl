@@ -5,10 +5,11 @@
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    
    xmlns:isob4j="http://eric.brechemier.name/2004/bin4java/isoXml"
-   xmlns="http://www.w3.org/1999/xhtml"
    
    xmlns:java="http://xml.apache.org/xalan/java"
    xmlns:xmlbin="xalan://name.brechemier.eric"
+   
+   xmlns:info="http://eric.brechemier.name/2005/info"
 >
   <xsl:import href="../../encoder/B4JSimpleEncoder.xsl" />
   
