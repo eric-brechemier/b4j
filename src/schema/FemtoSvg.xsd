@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   targetNamespace="http://eric.brechemier.name/2004/femtosvg"
+   elementFormDefault="qualified"
+   xmlns:fsvg="http://eric.brechemier.name/2004/femtosvg"
+   xmlns:mathfp="http://eric.brechemier.name/2004/mathFP"
+   
+   xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config"
+   xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava"
+>
+  <!--
+  *** Credits ***
+  Author: Eric Bréchemier, October 2004
+  
+  MathFP was developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/
+  -->
+  <xsd:annotation>
+    <xsd:appinfo>
+      <config:root element='svg' />
+      <a4j:packages>
+      import java.util.Vector; // for nodes dictionary
+      import javax.microedition.lcdui.Font; // for text Font
+      
+      import com.expway.esg.ESGController; // for logger
+      import com.expway.esg.ESGDocument; // for decoding result
+      import com.expway.esg.ESGCanvas; // for svg:svg element
+      import com.expway.esg.ESGNode; // all SVG elements
+      import com.expway.esg.ESGGroup; // for svg:g element
+      import com.expway.esg.ESGIntValue; // for (potentially) animated attributes
+      import com.expway.esg.ESGTransform; // for svg transform attribute
+      import com.expway.esg.ESGTriggeredAnimation; // for svg animations
+      import com.expway.esg.ESGRectangleEllipse; // for svg:rect, svg:circle, svg:ellipse elements
+      import com.expway.esg.ESGFlowText; // for svg:text and svg:flowRoot elements
+      
+      import net.jscience.math.kvm.MathFP; // for fixed point values
+      </a4j:packages>
+      <a4j:globalDef>
+      private static Vector nodesDictionary = new Vector();
+      
+      <![CDATA[
+      private static void logError(String catchingFunction, Exception e) {
+        //#if LOG_TRUE && LOG_ERROR_TRUE
+          ESGController.getLogger().logln(catchingFunction+"> "
+                  +"ERROR: "+e
+                  +" message="+ e.getMessage() );
+          e.printStackTrace();
+        //#endif
+      }
+      
+      protected static void addNodeToDictionary(ESGNode newESGNode, boolean hasId)
+      {
+        // When Id is present, add this reference to listeners Vector.
+        // N.B. id is not encoded because it corresponds to next position in Vector.
+        
+        if (hasId) {
+          nodesDictionary.addElement(newESGNode);
+          //#if LOG_TRUE && LOG_DECODING_TRUE
+              //# ESGController.getLogger().logln("ESGDocumentManager.addNodeToDictionary> "
+                  //# +"Id="+(nodesDictionary.size()-1) );
+          //#endif
+        }
+      }
+      
+      ]]>
+      </a4j:globalDef>
+      <a4j:context>
+         <a4j:in>int queryId</a4j:in>
+         <a4j:out>ESGDocument</a4j:out>
+      </a4j:context>
+      <a4j:events>
+        <a4j:onDocumentStart>
+        nodesDictionary.removeAllElements();
+        ESGCanvas result;
+        </a4j:onDocumentStart>
+        <a4j:onEachChildEnd child='ESGCanvas svgCanvas'>
+        result = svgCanvas;
+        </a4j:onEachChildEnd>
+        <a4j:onDocumentEnd>
+        result.setQueryId(queryId);
+        return result;
+        </a4j:onDocumentEnd>
+        <a4j:onError name='e'>
+        logError("JavaDecoder.createESGDocument", e);
+        return null;
+        </a4j:onError>
+      </a4j:events>
+    </xsd:appinfo>
+  </xsd:annotation>
+  
+  <!-- elements <=> vocabulary -->
+  <xsd:element name="svg" type="fsvg:Svg" />
+  
+  <xsd:element name="g" type="fsvg:G" />
+  
+  <xsd:element name="rect" type="fsvg:Rect" />
+  <xsd:element name="circle" type="fsvg:Circle" />
+  <xsd:element name="text" type="fsvg:Text" />
+  
+  <!-- tree structure <=> grammar -->
+  
+  <xsd:complexType name="Svg">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:context>
+          <a4j:out>ESGCanvas</a4j:out>
+          <a4j:continuation>canvas, null</a4j:continuation>
+        </a4j:context>      
+        <a4j:events>
+          <a4j:onElementStart>
+          ESGCanvas canvas;
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+          canvas = new ESGCanvas(atWidth, atHeight, atViewBox_x, atViewBox_y, atViewBox_width, atViewBox_height);
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias='contentCount'>
+          ESGNode[] content = new ESGNode[contentCount];  
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd child='ESGNode svgNode' position='i'>
+          content[i] = svgNode;
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+          canvas.setContent(content);
+          
+          for (int i=0; i&lt;content.length; i++) {
+            content[i].updateReferences(nodesDictionary);
+          }
+          
+          return canvas;
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    
+    <!-- test -->
+    <xsd:sequence>
+      <xsd:element ref="fsvg:rect" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="fsvg:circle" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="fsvg:text" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="fsvg:g" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    
+    <!-- final 
+    <xsd:choice maxOccurs="unbounded">
+      <xsd:element ref="fsvg:rect" />
+      <xsd:element ref="fsvg:circle" />
+      <xsd:element ref="fsvg:text" />
+      <xsd:element ref="fsvg:g" />
+    </xsd:choice>
+    -->
+    <xsd:attribute name="width" type="xsd:int" use="required"/>
+    <xsd:attribute name="height" type="xsd:int" use="required"/>
+    <xsd:attribute name="viewBox_x" type="xsd:float" use="required"/>
+    <xsd:attribute name="viewBox_y" type="xsd:float" use="required"/>
+    <xsd:attribute name="viewBox_width" type="xsd:float" use="required"/>
+    <xsd:attribute name="viewBox_height" type="xsd:float" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="G">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:context>
+          <a4j:in>ESGCanvas canvas, ESGNode parentNode</a4j:in>
+          <a4j:out>ESGGroup</a4j:out>
+          <a4j:continuation>canvas, result</a4j:continuation>
+        </a4j:context>
+        <a4j:events>
+          <a4j:onElementStart>
+          ESGGroup result;
+          
+          // unsupported attributes for now
+          ESGIntValue fillColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          ESGIntValue strokeColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          Font font = Font.getDefaultFont();
+          int dashedStroke = ESGNode.STROKE_NORMAL;
+          int textAnchor = ESGNode.TEXT_ANCHOR_INHERIT;
+          boolean hasId = false;
+          boolean isFocusable = false;
+          ESGIntValue inactiveHiddenActive = new ESGIntValue( ESGNode.STATE_ACTIVE );
+          ESGTransform[] transforms = new ESGTransform[0];
+          ESGTriggeredAnimation[] triggeredAnimations = null;
+          ESGNode[] listeners = null;
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+          result = new ESGGroup(canvas, parentNode, fillColor, strokeColor, font, dashedStroke, textAnchor, 
+            transforms, inactiveHiddenActive, triggeredAnimations, listeners);
+          addNodeToDictionary(result,hasId);
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias='contentCount'>
+            ESGNode[] content = new ESGNode[contentCount];
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd child='ESGNode svgNode' position='i'>
+            content[i] = svgNode;
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+          result.setContent(content);
+          return result;
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:choice maxOccurs="unbounded">
+      <xsd:element ref="fsvg:rect" />
+      <xsd:element ref="fsvg:circle" />
+      <xsd:element ref="fsvg:text" />
+    </xsd:choice>
+    <xsd:attribute name="id" type="xsd:int" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Rect">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:context>
+          <a4j:in>ESGCanvas canvas, ESGNode parentNode</a4j:in>
+          <a4j:out>ESGRectangleEllipse</a4j:out>
+        </a4j:context>
+        <a4j:events>
+          <a4j:onElementStart>
+          ESGRectangleEllipse result;
+          boolean isAnEllipse = false;
+          
+          // unsupported attributes for now
+          ESGIntValue fillColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          ESGIntValue strokeColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          Font font = Font.getDefaultFont();
+          int dashedStroke = ESGNode.STROKE_NORMAL;
+          int textAnchor = ESGNode.TEXT_ANCHOR_INHERIT;
+          boolean hasId = false;
+          boolean isFocusable = false;
+          ESGIntValue inactiveHiddenActive = new ESGIntValue( ESGNode.STATE_ACTIVE );
+          ESGTransform[] transforms = new ESGTransform[1];
+          for (int i=0; i&lt;transforms.length; i++) {
+              //when node is created, transform elements MUST NOT be null
+              transforms[i] = ESGTransform.newESGTransform();
+          }
+          
+          ESGTriggeredAnimation[] triggeredAnimations = null;
+          ESGNode[] listeners = null;
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+          // last transform is used for x,y position
+          transforms[transforms.length].setValues(0, 0, 0, 0, atX, atY);
+          ESGIntValue width = new ESGIntValue(atWidth);
+          ESGIntValue height = new ESGIntValue(atHeight);
+          
+          result = new ESGRectangleEllipse(canvas, parentNode, fillColor, strokeColor, font,
+            dashedStroke, textAnchor, transforms, inactiveHiddenActive, triggeredAnimations, listeners,
+            width, height, isAnEllipse);
+          addNodeToDictionary(result,hasId);
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+          return result;
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="x" type="xsd:float" use="required"/>
+    <xsd:attribute name="y" type="xsd:float" use="required"/>
+    <xsd:attribute name="width" type="xsd:float" use="required"/>
+    <xsd:attribute name="height" type="xsd:float" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Circle">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:context>
+          <a4j:in>ESGCanvas canvas, ESGNode parentNode</a4j:in>
+          <a4j:out>ESGRectangleEllipse</a4j:out>
+        </a4j:context>
+        <a4j:events>
+          <a4j:onElementStart>
+          ESGRectangleEllipse result;
+          boolean isAnEllipse = true;
+          
+          // unsupported attributes for now
+          ESGIntValue fillColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          ESGIntValue strokeColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          Font font = Font.getDefaultFont();
+          int dashedStroke = ESGNode.STROKE_NORMAL;
+          int textAnchor = ESGNode.TEXT_ANCHOR_INHERIT;
+          boolean hasId = false;
+          boolean isFocusable = false;
+          ESGIntValue inactiveHiddenActive = new ESGIntValue( ESGNode.STATE_ACTIVE );
+          ESGTransform[] transforms = new ESGTransform[1];
+          for (int i=0; i&lt;transforms.length; i++) {
+              //when node is created, transform elements MUST NOT be null
+              transforms[i] = ESGTransform.newESGTransform();
+          }
+          
+          ESGTriggeredAnimation[] triggeredAnimations = null;
+          ESGNode[] listeners = null;
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+          // last transform is used for x,y position
+          transforms[transforms.length].setValues(0, 0, 0, 0, atCx, atCy);
+          int diameter = 2*atR;
+          ESGIntValue width = new ESGIntValue( diameter );
+          ESGIntValue height = new ESGIntValue( diameter );
+          
+          result = new ESGRectangleEllipse(canvas, parentNode, fillColor, strokeColor, font,
+            dashedStroke, textAnchor, transforms, inactiveHiddenActive, triggeredAnimations, listeners,
+            width, height, isAnEllipse);
+          addNodeToDictionary(result,hasId);
+          </a4j:onAttributesEnd>
+          <a4j:onElementEnd>
+          return result;
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:attribute name="cx" type="xsd:float" use="required"/>
+    <xsd:attribute name="cy" type="xsd:float" use="required"/>
+    <xsd:attribute name="r" type="xsd:float" use="required"/>
+    <!-- debug -->
+    <xsd:attribute name="a1" type="xsd:int" />
+    <xsd:attribute name="a2" type="xsd:int" />
+    <xsd:attribute name="a3" type="xsd:int" />
+    <xsd:attribute name="a4" type="xsd:int" />
+    <xsd:attribute name="a5" type="xsd:int" />
+    <xsd:attribute name="a6" type="xsd:int" />
+    <xsd:attribute name="a7" type="xsd:int" />
+    <xsd:attribute name="a8" type="xsd:int" />
+    
+    <xsd:attribute name="b1" type="xsd:int" />
+    <xsd:attribute name="b2" type="xsd:int" />
+    <xsd:attribute name="b3" type="xsd:int" />
+    <xsd:attribute name="b4" type="xsd:int" />
+    <xsd:attribute name="b5" type="xsd:int" />
+    <xsd:attribute name="b6" type="xsd:int" />
+    <xsd:attribute name="b7" type="xsd:int" />
+    <xsd:attribute name="b8" type="xsd:int" />
+    
+    <xsd:attribute name="c1" type="xsd:int" />
+    <xsd:attribute name="c2" type="xsd:int" />
+    <xsd:attribute name="c3" type="xsd:int" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Text">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:context>
+          <a4j:in>ESGCanvas canvas, ESGNode parentNode</a4j:in>
+          <a4j:out>ESGFlowText</a4j:out>
+        </a4j:context>
+        <a4j:events>
+          <a4j:onElementStart>
+          ESGFlowText result;
+          
+          // unsupported attributes for now
+          ESGIntValue fillColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          ESGIntValue strokeColor = new ESGIntValue( ESGNode.INHERIT_VALUE );
+          Font font = Font.getDefaultFont();
+          int dashedStroke = ESGNode.STROKE_NORMAL;
+          int textAnchor = ESGNode.TEXT_ANCHOR_INHERIT;
+          boolean hasId = false;
+          boolean isFocusable = false;
+          ESGIntValue inactiveHiddenActive = new ESGIntValue( ESGNode.STATE_ACTIVE );
+          ESGTransform[] transforms = new ESGTransform[1];
+          for (int i=0; i&lt;transforms.length; i++) {
+              //when node is created, transform elements MUST NOT be null
+              transforms[i] = ESGTransform.newESGTransform();
+          }
+          
+          ESGTriggeredAnimation[] triggeredAnimations = null;
+          ESGNode[] listeners = null;
+          boolean isFlowRoot = false;
+          int focusRectStrokeColor = ESGNode.INHERIT_VALUE;
+          int focusRectFillColor = ESGNode.NO_COLOR;
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+          // last transform is used for x,y position
+          transforms[transforms.length].setValues(0, 0, 0, 0, atX, atY);
+          
+          /* for flowRoot, not simple text
+          ESGIntValue width = new ESGIntValue(atWidth);
+          ESGIntValue height = new ESGIntValue(atHeight);
+          */
+          ESGIntValue width = null;
+          ESGIntValue height = null;
+          int dynamicTextId = -1;
+          </a4j:onAttributesEnd>
+          <a4j:onValueEnd alias='text'>
+          result = new ESGFlowText(canvas, parentNode, fillColor, strokeColor, font, dashedStroke, textAnchor, transforms, 
+                          inactiveHiddenActive, triggeredAnimations, listeners,
+                          width, height, text, dynamicTextId, isFlowRoot, focusRectStrokeColor, focusRectFillColor);
+          addNodeToDictionary(result,hasId);
+          </a4j:onValueEnd>
+          <a4j:onElementEnd>
+          return result;
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="x" type="xsd:float" use="required"/>
+        <xsd:attribute name="y" type="xsd:float" use="required"/>
+        
+        <!-- debug -->
+        <xsd:attribute name="ta1" type="xsd:int" />
+        <xsd:attribute name="ta2" type="xsd:int" />
+        <xsd:attribute name="ta3" type="xsd:int" />
+        <xsd:attribute name="ta4" type="xsd:int" />
+        <xsd:attribute name="ta5" type="xsd:int" />
+        <xsd:attribute name="ta6" type="xsd:int" />
+        <xsd:attribute name="ta7" type="xsd:int" />
+        <xsd:attribute name="ta8" type="xsd:int" />
+        
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  
+  <!-- simple types -->
+  
+    <!-- empty for now, but mathFP types must be declared in another imported schema -->
+  
+</xsd:schema>
