@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ignore="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" xmlns:include="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" xmlns:mathFP="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config" xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" xmlns:svg="http://eric.brechemier.name/2004/NanoSvg" targetNamespace="http://eric.brechemier.name/2004/NanoSvg" elementFormDefault="qualified">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ignore="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" xmlns:include="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" xmlns:fp="http://eric.brechemier.name/2004/fp/" xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config" xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" xmlns:svg="http://eric.brechemier.name/2004/NanoSvg" targetNamespace="http://eric.brechemier.name/2004/NanoSvg" elementFormDefault="qualified">
   <xsd:annotation>
     <xsd:documentation>
       *** Credits ***
       This Xml Schema: Your Name, Month 2004
       
-      Tools and Concept: Eric Bréchemier
-      MathFP: developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/
+      Author:   Eric Bréchemier
+      Concept:  Fabien Delpiano
     </xsd:documentation>
     <xsd:appinfo>
       <config:root element="svg"/>
@@ -44,7 +44,7 @@
       </a4j:events>
     </xsd:appinfo>
   </xsd:annotation>
-  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/fp/" schemaLocation="fp.xsd"/>
   <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" schemaLocation="idRefIgnore.xsd"/>
   <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" schemaLocation="idRefInclude.xsd"/>
   <xsd:import namespace="http://eric.brechemier.name/2004/NanoXForms" schemaLocation="NanoXForms.xsd"/>
@@ -1138,7 +1138,7 @@
   </xsd:complexType>
   <!--simple types: renaming basic types-->
   <xsd:simpleType name="Distance">
-    <xsd:restriction base="mathFP:float"/>
+    <xsd:restriction base="fp:float"/>
   </xsd:simpleType>
   <xsd:simpleType name="Color">
     <xsd:restriction base="xsd:unsignedInt"/>
