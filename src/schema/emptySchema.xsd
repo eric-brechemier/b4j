@@ -10,7 +10,7 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:include="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/"
   xmlns:ignore="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/"
-  xmlns:mathFP="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/"
+  xmlns:fp="http://eric.brechemier.name/2004/fp/"
   xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config"
   xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava"
 >
@@ -21,10 +21,9 @@
     <xsl:value-of select="$nsURI" />
   </xsl:attribute>
   
-  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/fp/" schemaLocation="fp.xsd"/>
   <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" schemaLocation="idRefIgnore.xsd"/>
   <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" schemaLocation="idRefInclude.xsd"/>
-  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
   
   <xsl:comment>
     elements: User Vocabulary 
