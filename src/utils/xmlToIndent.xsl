@@ -5,7 +5,7 @@
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    
 >
-  <xsl:include href="textFormatFunctions.xsl" />
+  <xsl:import href="textFormatFunctions.xsl" />
 
   <xsl:output method="xml" indent="no" encoding="ISO-8859-1" />
    
