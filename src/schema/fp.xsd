@@ -21,4 +21,25 @@
     <xsd:restriction base="xsd:float" />
   </xsd:simpleType>
   
+  <!-- degrees to radians conversion -->
+  <xsd:simpleType name="degToRadAngle">
+    <xsd:restriction base="xsd:float" />
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="degToCosAngle">
+    <xsd:restriction base="xsd:float" />
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="degToSinAngle">
+    <xsd:restriction base="xsd:float" />
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="degToMinusCosAngle">
+    <xsd:restriction base="xsd:float" />
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="degToMinusSinAngle">
+    <xsd:restriction base="xsd:float" />
+  </xsd:simpleType>
+  
 </xsd:schema>
