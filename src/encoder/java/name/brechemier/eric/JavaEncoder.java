@@ -102,7 +102,7 @@ public class JavaEncoder
    
    public static void writeUnsignedIntFromLong(long longData) throws IOException
    {
-      int intData = (int)(longData & 0xFFFFFFFF );
+      int intData = (int)(longData & 0xFFFFFFFFL );
       _singleton.output.writeInt(intData);
    }
    
