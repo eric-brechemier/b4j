@@ -4,37 +4,53 @@
   
   Project description: Binary for Java Encoder and Decoder Generator
   
-  B4J 1.1 POWER PACK Version
+  B4J 1.2 (beta) POWER PACK Version
   
   Credits:
   Author: Eric Bréchemier, October 2004
+  Concept: Fabien Delpiano, May 2004
   
-  Uses MathFP (developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/)
-  Uses Saxon, and Xalan, and Jing, and XercesJarv, and Artistic Style.
-  
+  Uses Saxon, Xalan, Jing, XercesJarv, Artistic Style, Bearlib FP library.
   -->
   <!--
   <ONLY PROPERTIES TO MODIFY>
   -->
   <!--
+  This build file was intended for use in two different scenarios:
+  * With B4J fully included in your project,
+  - keep project basedir="." and
+  - keep USER.project.dir.path location="."
+  * With B4J shared by your different projects,
+  - set project basedir="B4J relative location" and
+  - set USER.project.dir.path to your project location.
+  Many thanks for your attention,
+  B4J Team
+  -->
+  <!--<property name="USER.project.dir.path" location="C:\programs\eclipse\workspace\USERPROJECT"/>-->
+  <property name="USER.project.dir.path" location="."/>
+  <!--
   input files
   -->
-  <property name="USER.schema.dir.path" value="usr"/>
-  <property name="USER.input.data.path" value="usr/testSample.xml"/>
+  <property name="USER.schema.dir.path" location="${USER.project.dir.path}/usr"/>
+  <property name="USER.input.data.path" location="${USER.project.dir.path}/usr/testSample.xml"/>
   <property name="USER.schema.name" value="NanoSvg.xsd"/>
   <property name="USER.namespace.uri" value="http://eric.brechemier.name/2004/b4j/user-project"/>
   <property name="USER.namespace.prefix" value="usr"/>
   <!--
   java destination project
   -->
+  <property name="USER.output.data.dir.path" location="${USER.project.dir.path}/data"/>
+  <!--without extension-->
   <property name="USER.output.data.name" value="gameData"/>
-  <property name="USER.output.data.dir.path" value="../myProject/"/>
+  <!--#default for default package-->
   <property name="USER.decoder.java.package" value="#default"/>
-  <property name="USER.java.package.dir.path" value="C:\programs\eclipse\workspace\MIDPESG\psrc"/>
+  <!--including package directories-->
+  <property name="USER.java.package.dir.path" location="${USER.project.dir.path}/src"/>
   <!--
   version
   -->
   <property name="USER.include.version.number.TRUE" value="set name end to TRUE or FALSE to use this feature"/>
+  <property name="USER.encoder.version.path" location="${USER.project.dir.path}/encoder.version"/>
   <!--
   </ONLY PROPERTIES TO MODIFY>
   
@@ -45,13 +61,21 @@
   
   -->
   <!--FOLLOWING PROPERTIES SHOULD NOT BE MODIFIED-->
-  <!--Michael Kay Saxon-->
+  <!--Libraries-->
   <property name="lib.path" value="lib"/>
+  <!--Beartronics Fixed Point Library-->
+  <property name="fp.jar.path" value="${lib.path}/fplib-1.6/beartronics_fp-1.6.jar"/>
+  <!--Michael Kay Saxon-->
   <property name="saxon.jar" value="${lib.path}/saxon-6.5.3/saxon.jar"/>
   <!--Apache Xalan and java extension-->
   <property name="xalan.class" value="org.apache.xalan.xslt.Process"/>
   <!--included in Java JRE-->
   <property name="encoder.java.extension.path" value="src/encoder/java"/>
+  <property name="encoder.java.extension.classpath" value="${fp.jar.path};${encoder.java.extension.path}"/>
+  <!--Xerces-J-->
+  <property name="xml-apis.jar.path" value="${lib.path}/xerces-j-2.6.2/xml-apis.jar"/>
+  <property name="xercesImpl.jar.path" value="${lib.path}/xerces-j-2.6.2/xercesImpl.jar"/>
+  <property name="xerces-j.classpath" value="${xml-apis.jar.path};${xercesImpl.jar.path}"/>
   <!--James Clark Jing, a validator for RELAX NG and other schema languages-->
   <property name="jing.jar" value="${lib.path}/jing-20030619/jing.jar"/>
   <target name="validateSchemaUsingJing">
@@ -79,7 +103,7 @@
     </java>
   </target>
   <!--Tal Davidson Artistic Style Formatter-->
-  <property name="artistic.style.cmd" value="${lib.path}/astyle-1.15.3/astyle"/>
+  <property name="artistic.style.cmd" location="${lib.path}/astyle-1.15.3/astyle"/>
   <property name="artistic.style.options" value="--style=java --suffix=.before.indent"/>
   <target name="indentJavaUsingArtisticStyle">
     <exec executable="${artistic.style.cmd}">
@@ -93,12 +117,14 @@
   <!--Eric Bréchemier B4J Power Pack-->
   <property name="powerpack.encoder.src.path" value="src/powerpack/encoder"/>
   <property name="powerpack.encoder.java.extension.path" value="${powerpack.encoder.src.path}/java"/>
+  <property name="powerpack.encoder.java.extension.classpath" value="${encoder.java.extension.classpath};${powerpack.encoder.java.extension.path};${xerces-j.classpath}"/>
   <property name="powerpack.encoder.generation.transform.path" value="${powerpack.encoder.src.path}/XsdToXsltEncoder.xsl"/>
   <property name="powerpack.b4j.encoder.transform.path" value="${powerpack.encoder.src.path}/B4jSimpleEncoder.xsl"/>
   <property name="powerpack.stacks.translation.transform.path" value="${powerpack.encoder.src.path}/ReplaceStacksInIsoB4J.xsl"/>
   <property name="powerpack.decoder.src.path" value="src/powerpack/decoder"/>
   <property name="powerpack.decoder.generation.transform.path" value="${powerpack.decoder.src.path}/XsdToJavaDecoder.xsl"/>
   <property name="powerpack.test.decoder.generation.transform.path" value="${powerpack.decoder.src.path}/XsdToJavaTestDecoder.xsl"/>
+  <property name="powerpack.generated.encoder.jar.name" value="${USER.namespace.prefix}-b4j.jar"/>
   <!--Xml Schemas-->
   <property name="xml.schema.path" value="src/schema"/>
   <property name="basic.schema.path" value="${xml.schema.path}/BasicXmlSchema.xsd"/>
@@ -108,22 +134,23 @@
   <property name="user.schema.backup.before.removing.annotations.path" value="${user.schema.path}.before.removing.annotations.bak"/>
   <!--templates output files-->
   <property name="template.empty.schema.path" value="${xml.schema.path}/emptySchema.xsd"/>
-  <property name="template.mathFP.schema.path" value="${xml.schema.path}/mathFP.xsd"/>
+  <property name="template.fp.schema.path" value="${xml.schema.path}/fp.xsd"/>
   <property name="template.include.idref.schema.path" value="${xml.schema.path}/idRefInclude.xsd"/>
   <property name="template.ignore.idref.schema.path" value="${xml.schema.path}/idRefIgnore.xsd"/>
   <!--transformation sheets-->
-  <property name="encoder.src.path" value="src/encoder"/>
+  <property name="xslt.src.path" value="src"/>
+  <property name="encoder.src.path" value="${xslt.src.path}/encoder"/>
   <property name="encoder.generation.transform.path" value="${encoder.src.path}/XsdToXsltEncoder.xsl"/>
   <property name="b4j.encoder.transform.path" value="${encoder.src.path}/B4jSimpleEncoder.xsl"/>
-  <property name="decoder.src.path" value="src/decoder"/>
+  <property name="decoder.src.path" value="${xslt.src.path}/decoder"/>
   <property name="decoder.generation.transform.path" value="${decoder.src.path}/XsdToJavaDecoder.xsl"/>
   <property name="test.decoder.generation.transform.path" value="${decoder.src.path}/XsdToJavaTestDecoder.xsl"/>
   <property name="java.transform.path" value="${decoder.src.path}/IsoJavaToJava.xsl"/>
-  <property name="utils.src.path" value="src/utils"/>
+  <property name="utils.src.path" value="${xslt.src.path}/utils"/>
   <property name="indent.transform.path" value="${utils.src.path}/xmlToIndent.xsl"/>
   <property name="indent.and.clean.schema.transform.path" value="${utils.src.path}/IndentAndRemoveNamespaceHelpers.xsl"/>
   <property name="pretty.print.transform.path" value="${pretty.print.path}/xmlverbatimwrapper.xsl"/>
-  <property name="edit.src.path" value="src/edit"/>
+  <property name="edit.src.path" value="${xslt.src.path}/edit"/>
   <property name="add.types.transform.path" value="${edit.src.path}/XsdAddMissingTypes.xsl"/>
   <property name="add.annotations.transform.path" value="${edit.src.path}/XsdAddAnnotations.xsl"/>
   <property name="remove.annotations.transform.path" value="${edit.src.path}/XsdRemoveAnnotations.xsl"/>
@@ -152,10 +179,10 @@
   <property name="distrib.includes.pattern" value="build.xml encoder.version doc/** lib/** src/** usr/**"/>
   <property name="distrib.excludes.pattern" value="**/draft **/draft/** **/material **/material/**"/>
   <!--build number-->
-  <property name="build.number.property.path" value="encoder.version"/>
+  <property name="build.number.property.path" value="${USER.encoder.version.path}"/>
   <!--Startup tasks-->
   <target name="description">
-    <echo>B4J 1.1 POWER PACK Version</echo>
+    <echo>B4J 1.2 (beta) POWER PACK Version</echo>
     <echo message="Available targets..."/>
     <echo message="Startup:        createEmptySchema, addSchemaTypes, "/>
     <echo message="                addSemanticActions, removeSemanticActions"/>
@@ -188,7 +215,7 @@
       <arg value="${indent.and.clean.schema.transform.path}"/>
       <arg value="indentWithUnit=  "/>
     </java>
-    <copy file="${template.mathFP.schema.path}" todir="${USER.schema.dir.path}"/>
+    <copy file="${template.fp.schema.path}" todir="${USER.schema.dir.path}"/>
     <copy file="${template.include.idref.schema.path}" todir="${USER.schema.dir.path}"/>
     <copy file="${template.ignore.idref.schema.path}" todir="${USER.schema.dir.path}"/>
     <echo message="Done."/>
@@ -309,8 +336,8 @@
   </target>
   <target name="buildJavaExtension">
     <echo message="[Using PowerPack] Building Java Extension Class for Encoding through XSLT..."/>
-    <javac srcdir="${encoder.java.extension.path}" classpath="${encoder.java.extension.path}"/>
-    <javac srcdir="${powerpack.encoder.java.extension.path}" classpath="${encoder.java.extension.path};${powerpack.encoder.java.extension.path}"/>
+    <javac srcdir="${encoder.java.extension.path}" classpath="${encoder.java.extension.classpath}"/>
+    <javac srcdir="${powerpack.encoder.java.extension.path}" classpath="${powerpack.encoder.java.extension.classpath}"/>
     <echo message="Done."/>
   </target>
   <target name="encoding" depends="generateEncoder, buildJavaExtension, validateData, getVersionNumber">
@@ -328,7 +355,7 @@
       <arg value="${powerpack.stacks.translation.transform.path}"/>
     </java>
     <delete file="${generated.isob4j.path}.stk"/>
-    <java classname="${xalan.class}" classpath="${encoder.java.extension.path};${powerpack.encoder.java.extension.path}" fork="true">
+    <java classname="${xalan.class}" classpath="${powerpack.encoder.java.extension.classpath}" fork="true">
       <arg value="-IN"/>
       <arg value="${generated.isob4j.path}"/>
       <arg value="-XSL"/>
@@ -426,8 +453,16 @@
     <tstamp>
       <format property="std-date-today" pattern="yyyy-MM-dd" locale="en"/>
     </tstamp>
-    <zip destfile="${distrib.dir.path}\${std-date-today}-${distrib.zip.name}" update="no">
+    <zip destfile="${distrib.dir.path}/${std-date-today}-${distrib.zip.name}" update="no">
       <zipfileset dir="." includes="${distrib.includes.pattern}" excludes="${distrib.excludes.pattern}" prefix="b4j"/>
     </zip>
+  </target>
+  <target name="packageEncoderLib" depends="generateDecoder">
+    <jar destfile="${distrib.dir.path}/${powerpack.generated.encoder.jar.name}">
+      <fileset dir="${encoder.java.extension.path}" excludes="**/*.java"/>
+      <fileset dir="${powerpack.encoder.java.extension.path}" excludes="**/*.java"/>
+      <zipfileset prefix="xslt" file="${generated.encoder.transform.path}"/>
+      <zipfileset prefix="xslt" dir="${xslt.src.path}" excludes="**/*.java **/java **/java/**  **/ant **/ant/* **/schema **/schema/* **/edit **/edit/* **/prettyPrint **/prettyPrint/*"/>
+    </jar>
   </target>
 </project>
