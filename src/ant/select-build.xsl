@@ -119,51 +119,51 @@
     <property name="xerces-j.classpath" value="${{xml-apis.jar.path}};${{xercesImpl.jar.path}}"/>
     
     <xsl:comment> James Clark Jing, a validator for RELAX NG and other schema languages </xsl:comment>
-    <property name="jing.jar" value="{'${lib.path}/jing-20030619/jing.jar'}"/>
+    <property name="jing.jar" value="${{lib.path}}/jing-20030619/jing.jar"/>
     
     <target name="validateSchemaUsingJing">
-      <java jar="{'${jing.jar}'}" fork="true">
-        <arg value="{'${param.xml.schema}'}"/>
+      <java jar="${{jing.jar}}" fork="true">
+        <arg value="${{param.xml.schema}}"/>
       </java>
     </target>
     
     <target name="validateDataUsingJing">
-      <java jar="{'${jing.jar}'}" fork="true">
-        <arg value="{'${param.xml.schema}'}"/>
-        <arg value="{'${param.xml.data}'}"/>
+      <java jar="${{jing.jar}}" fork="true">
+        <arg value="${{param.xml.schema}}"/>
+        <arg value="${{param.xml.data}}"/>
       </java>
     </target>
     
     <xsl:comment> Sun Multi-Schema XML Validator and Xml Validation </xsl:comment>
-    <property name="msv.jar" value="{'${lib.path}/msv-20041031/msv.jar'}"/>
+    <property name="msv.jar" value="${{lib.path}}/msv-20041031/msv.jar"/>
     
     <target name="validateSchemaUsingSunMSV">
-      <java jar="{'${msv.jar}'}" fork="true">
-        <arg value="{'${param.xml.schema}'}"/>
+      <java jar="${{msv.jar}}" fork="true">
+        <arg value="${{param.xml.schema}}"/>
       </java>
     </target>
     
     <target name="validateDataUsingSunMSV">
-      <java jar="{'${msv.jar}'}" fork="true">
-        <arg value="{'${param.xml.schema}'}"/>
-        <arg value="{'${param.xml.data}'}"/>
+      <java jar="${{msv.jar}}" fork="true">
+        <arg value="${{param.xml.schema}}"/>
+        <arg value="${{param.xml.data}}"/>
       </java>
     </target>
     
     <xsl:comment> Tal Davidson Artistic Style Formatter </xsl:comment>
-    <property name="artistic.style.cmd" value="{'${lib.path}/astyle-1.15.3/astyle'}"/>
+    <property name="artistic.style.cmd" location="${{lib.path}}/astyle-1.15.3/astyle"/>
     <property name="artistic.style.options" value="--style=java --suffix=.before.indent"/>
     
     <target name="indentJavaUsingArtisticStyle">
-      <exec executable="{'${artistic.style.cmd}'}">
-        <arg line="{'${artistic.style.options}'}"/>
-        <arg value="{'${java.file.to.indent}'}"/>
+      <exec executable="${{artistic.style.cmd}}">
+        <arg line="${{artistic.style.options}}"/>
+        <arg value="${{java.file.to.indent}}"/>
       </exec>
     </target>
     
     <xsl:comment> Oliver Becker XML to HTML Verbatim Formatter with Syntax Highlighting </xsl:comment>
     <property name="pretty.print.path" value="src/utils/prettyPrint"/>
-    <property name="pretty.print.css.path" value="{'${pretty.print.path}/xmlverbatim.css'}"/>
+    <property name="pretty.print.css.path" value="${{pretty.print.path}}/xmlverbatim.css"/>
     
     <xsl:if test="$isPowerPackVersion">
       <xsl:comment> Eric Bréchemier B4J Power Pack </xsl:comment>
@@ -181,62 +181,63 @@
     
     <xsl:comment> Xml Schemas </xsl:comment>
     <property name="xml.schema.path" value="src/schema"/>
-    <property name="basic.schema.path" value="{'${xml.schema.path}/BasicXmlSchema.xsd'}"/>
-    <property name="actions.in.basic.schema.path" value="{'${xml.schema.path}/BasicXmlSchemaPlusSemanticActions.xsd'}"/>
+    <property name="basic.schema.path" value="${{xml.schema.path}}/BasicXmlSchema.xsd"/>
+    <property name="actions.in.basic.schema.path" value="${{xml.schema.path}}/BasicXmlSchemaPlusSemanticActions.xsd"/>
     
-    <property name="user.schema.path" value="{'${USER.schema.dir.path}/${USER.schema.name}'}" />
-    <property name="user.schema.backup.path" value="{'${user.schema.path}.bak'}" />
-    <property name="user.schema.backup.before.removing.annotations.path" value="{'${user.schema.path}.before.removing.annotations.bak'}" />
+    <property name="user.schema.path" value="${{USER.schema.dir.path}}/${{USER.schema.name}}" />
+    <property name="user.schema.backup.path" value="${{user.schema.path}}.bak" />
+    <property name="user.schema.backup.before.removing.annotations.path" value="${{user.schema.path}}.before.removing.annotations.bak" />
     
     <xsl:comment> templates output files </xsl:comment>
-    <property name="template.empty.schema.path" value="{'${xml.schema.path}/emptySchema.xsd'}"/>
-    <property name="template.mathFP.schema.path" value="{'${xml.schema.path}/mathFP.xsd'}"/>
-    <property name="template.include.idref.schema.path" value="{'${xml.schema.path}/idRefInclude.xsd'}"/>
-    <property name="template.ignore.idref.schema.path" value="{'${xml.schema.path}/idRefIgnore.xsd'}"/>
+    <property name="template.empty.schema.path" value="${{xml.schema.path}}/emptySchema.xsd"/>
+    <property name="template.fp.schema.path" value="${{xml.schema.path}}/fp.xsd"/>
+    <property name="template.include.idref.schema.path" value="${{xml.schema.path}}/idRefInclude.xsd"/>
+    <property name="template.ignore.idref.schema.path" value="${{xml.schema.path}}/idRefIgnore.xsd"/>
     
     <xsl:comment> transformation sheets </xsl:comment>
-    <property name="encoder.src.path" value="src/encoder"/>
-    <property name="encoder.generation.transform.path" value="{'${encoder.src.path}/XsdToXsltEncoder.xsl'}"/>
-    <property name="b4j.encoder.transform.path" value="{'${encoder.src.path}/B4jSimpleEncoder.xsl'}"/>
+    <property name="xslt.src.path" value="src"/>
+    <property name="encoder.src.path" value="${{xslt.src.path}}/encoder"/>
+    <property name="encoder.generation.transform.path" value="${{encoder.src.path}}/XsdToXsltEncoder.xsl"/>
+    <property name="b4j.encoder.transform.path" value="${{encoder.src.path}}/B4jSimpleEncoder.xsl"/>
     
-    <property name="decoder.src.path" value="src/decoder"/>
-    <property name="decoder.generation.transform.path" value="{'${decoder.src.path}/XsdToJavaDecoder.xsl'}"/>
-    <property name="test.decoder.generation.transform.path" value="{'${decoder.src.path}/XsdToJavaTestDecoder.xsl'}"/>
-    <property name="java.transform.path" value="{'${decoder.src.path}/IsoJavaToJava.xsl'}"/>
+    <property name="decoder.src.path" value="${{xslt.src.path}}/decoder"/>
+    <property name="decoder.generation.transform.path" value="${{decoder.src.path}}/XsdToJavaDecoder.xsl"/>
+    <property name="test.decoder.generation.transform.path" value="${{decoder.src.path}}/XsdToJavaTestDecoder.xsl"/>
+    <property name="java.transform.path" value="${{decoder.src.path}}/IsoJavaToJava.xsl"/>
     
-    <property name="utils.src.path" value="src/utils"/>
-    <property name="indent.transform.path" value="{'${utils.src.path}/xmlToIndent.xsl'}"/>
-    <property name="indent.and.clean.schema.transform.path" value="{'${utils.src.path}/IndentAndRemoveNamespaceHelpers.xsl'}"/>
-    <property name="pretty.print.transform.path" value="{'${pretty.print.path}/xmlverbatimwrapper.xsl'}"/>
+    <property name="utils.src.path" value="${{xslt.src.path}}/utils"/>
+    <property name="indent.transform.path" value="${{utils.src.path}}/xmlToIndent.xsl"/>
+    <property name="indent.and.clean.schema.transform.path" value="${{utils.src.path}}/IndentAndRemoveNamespaceHelpers.xsl"/>
+    <property name="pretty.print.transform.path" value="${{pretty.print.path}}/xmlverbatimwrapper.xsl"/>
     
-    <property name="edit.src.path" value="src/edit"/>
-    <property name="add.types.transform.path" value="{'${edit.src.path}/XsdAddMissingTypes.xsl'}"/>
-    <property name="add.annotations.transform.path" value="{'${edit.src.path}/XsdAddAnnotations.xsl'}"/>
-    <property name="remove.annotations.transform.path" value="{'${edit.src.path}/XsdRemoveAnnotations.xsl'}"/>
+    <property name="edit.src.path" value="${{xslt.src.path}}/edit"/>
+    <property name="add.types.transform.path" value="${{edit.src.path}}/XsdAddMissingTypes.xsl"/>
+    <property name="add.annotations.transform.path" value="${{edit.src.path}}/XsdAddAnnotations.xsl"/>
+    <property name="remove.annotations.transform.path" value="${{edit.src.path}}/XsdRemoveAnnotations.xsl"/>
     
     <xsl:comment> encoding output files </xsl:comment>
     <property name="encoder.output.path" value="output/encoder"/>
-    <property name="generated.encoder.transform.path" value="{'${encoder.output.path}/IsoB4jEncoder.xsl'}"/>
-    <property name="generated.isob4j.path" value="{'${encoder.output.path}/${USER.output.data.name}.isob4j.xml'}"/>
-    <property name="generated.b4j.name" value="{'${USER.output.data.name}.b4j'}"/>
-    <property name="generated.b4j.path" value="{'${encoder.output.path}/${generated.b4j.name}'}"/>
-    <property name="generated.empty.path" value="{'${encoder.output.path}/empty.txt'}"/>
+    <property name="generated.encoder.transform.path" value="${{encoder.output.path}}/IsoB4jEncoder.xsl"/>
+    <property name="generated.isob4j.path" value="${{encoder.output.path}}/${{USER.output.data.name}}.isob4j.xml"/>
+    <property name="generated.b4j.name" value="${{USER.output.data.name}}.b4j"/>
+    <property name="generated.b4j.path" value="${{encoder.output.path}}/${{generated.b4j.name}}"/>
+    <property name="generated.empty.path" value="${{encoder.output.path}}/empty.txt"/>
     
     <xsl:comment> decoding output files </xsl:comment>
     <property name="decoder.output.path" value="output/decoder"/>  
-    <property name="generated.decoder.isojava.path" value="{'${decoder.output.path}/B4JDecoder.isojava.xml'}"/>
-    <property name="generated.decoder.path" value="{'${decoder.output.path}/B4JDecoder.java'}"/>
+    <property name="generated.decoder.isojava.path" value="${{decoder.output.path}}/B4JDecoder.isojava.xml"/>
+    <property name="generated.decoder.path" value="${{decoder.output.path}}/B4JDecoder.java"/>
     
     <property name="generated.test.decoder.class.name" value="B4JTestDecoder"/>
-    <property name="generated.test.decoder.src.name" value="{'${generated.test.decoder.class.name}.java'}"/>
-    <property name="test.decoder.isojava.path" value="{'${decoder.output.path}/${generated.test.decoder.class.name}.isojava.xml'}"/>
-    <property name="generated.test.decoder.src.path" value="{'${decoder.output.path}/${generated.test.decoder.src.name}'}"/>
+    <property name="generated.test.decoder.src.name" value="${{generated.test.decoder.class.name}}.java"/>
+    <property name="test.decoder.isojava.path" value="${{decoder.output.path}}/${{generated.test.decoder.class.name}}.isojava.xml"/>
+    <property name="generated.test.decoder.src.path" value="${{decoder.output.path}}/${{generated.test.decoder.src.name}}"/>
     
-    <property name="test.decoded.b4j.path" value="{'${decoder.output.path}/${generated.b4j.name}.decoded.xml'}"/>
+    <property name="test.decoded.b4j.path" value="${{decoder.output.path}}/${{generated.b4j.name}}.decoded.xml"/>
     
     <xsl:comment> documentation output files </xsl:comment>
     <property name="doc.path" value="output/doc"/>
-    <property name="schema.xhtml.doc.path" value="{'${doc.path}/userSchema.html'}"/>
+    <property name="schema.xhtml.doc.path" value="${{doc.path}}/userSchema.html"/>
   
     <xsl:comment> distrib </xsl:comment>
     <property name="distrib.dir.path" value="distrib" />
@@ -457,44 +458,42 @@
     <target name="encoding" depends="generateEncoder, buildJavaExtension, validateData, getVersionNumber">
       <xsl:choose>
         <xsl:when test="$isPowerPackVersion">
-          <echo message="[Using PowerPack] Encoding Binary for Java file from Input XML (v. {'${version.number}'})..." />
-          <java jar="{'${saxon.jar}'}" fork="true">
-            <arg value="-o"/><arg value="{'${generated.isob4j.path}'}.stk"/>
-            <arg value="{'${USER.input.data.path}'}"/>
-            <arg value="{'${generated.encoder.transform.path}'}"/>
+          <echo message="[Using PowerPack] Encoding Binary for Java file from Input XML (v. ${{version.number}})..." />
+          <java jar="${{saxon.jar}}" fork="true">
+            <arg value="-o"/><arg value="${{generated.isob4j.path}}.stk"/>
+            <arg value="${{USER.input.data.path}}"/>
+            <arg value="${{generated.encoder.transform.path}}"/>
           </java>
-          <java jar="{'${saxon.jar}'}" fork="true">
-            <arg value="-o"/><arg value="{'${generated.isob4j.path}'}"/>
-            <arg value="{'${generated.isob4j.path}'}.stk"/>
-            <arg value="{'${powerpack.stacks.translation.transform.path}'}"/>
+          <java jar="${{saxon.jar}}" fork="true">
+            <arg value="-o"/><arg value="${{generated.isob4j.path}}"/>
+            <arg value="${{generated.isob4j.path}}.stk"/>
+            <arg value="${{powerpack.stacks.translation.transform.path}}"/>
           </java>
-          <delete file="{'${generated.isob4j.path}'}.stk" />
-          
-          <java classname="{'${xalan.class}'}" classpath="{'${encoder.java.extension.path}'};{'${powerpack.encoder.java.extension.path}'}" fork="true">
-            <arg value="-IN"/><arg value="{'${generated.isob4j.path}'}"/>
-            <arg value="-XSL"/><arg value="{'${powerpack.b4j.encoder.transform.path}'}"/>
-            <arg value="-PARAM"/><arg value="b4jFileName"/><arg value="{'${generated.b4j.path}'}"/>
-            <arg value="-OUT"/><arg value="{'${generated.empty.path}'}"/>
+          <delete file="${{generated.isob4j.path}}.stk" />
+          <java classname="${{xalan.class}}" classpath="${{powerpack.encoder.java.extension.classpath}}" fork="true">
+            <arg value="-IN"/><arg value="${{generated.isob4j.path}}"/>
+            <arg value="-XSL"/><arg value="${{powerpack.b4j.encoder.transform.path}}"/>
+            <arg value="-PARAM"/><arg value="b4jFileName"/><arg value="${{generated.b4j.path}}"/>
+            <arg value="-OUT"/><arg value="${{generated.empty.path}}"/>
           </java>
-          <delete file="{'${generated.empty.path}'}" />
-          <copy file="{'${generated.b4j.path}'}" todir="{'${USER.output.data.dir.path}'}" />
+          <delete file="${{generated.empty.path}}" />
+          <copy file="${{generated.b4j.path}}" todir="${{USER.output.data.dir.path}}" />
         </xsl:when>
         <xsl:otherwise>
-          <echo message="Encoding Binary for Java file from Input XML (v. {'${version.number}'})..." />
-          <java jar="{'${saxon.jar}'}" fork="true">
-            <arg value="-o"/><arg value="{'${generated.isob4j.path}'}"/>
-            <arg value="{'${USER.input.data.path}'}"/>
-            <arg value="{'${generated.encoder.transform.path}'}"/>
+          <echo message="Encoding Binary for Java file from Input XML (v. ${{version.number}})..." />
+          <java jar="${{saxon.jar}}" fork="true">
+            <arg value="-o"/><arg value="${{generated.isob4j.path}}"/>
+            <arg value="${{USER.input.data.path}}"/>
+            <arg value="${{generated.encoder.transform.path}}"/>
           </java>
-          
-          <java classname="{'${xalan.class}'}" classpath="{'${encoder.java.extension.path}'}" fork="true">
-            <arg value="-IN"/><arg value="{'${generated.isob4j.path}'}"/>
-            <arg value="-XSL"/><arg value="{'${b4j.encoder.transform.path}'}"/>
-            <arg value="-PARAM"/><arg value="b4jFileName"/><arg value="{'${generated.b4j.path}'}"/>
-            <arg value="-OUT"/><arg value="{'${generated.empty.path}'}"/>
+          <java classname="${{xalan.class}}" classpath="${{encoder.java.extension.classpath}}" fork="true">
+            <arg value="-IN"/><arg value="${{generated.isob4j.path}}"/>
+            <arg value="-XSL"/><arg value="${{b4j.encoder.transform.path}}"/>
+            <arg value="-PARAM"/><arg value="b4jFileName"/><arg value="${{generated.b4j.path}}"/>
+            <arg value="-OUT"/><arg value="${{generated.empty.path}}"/>
           </java>
-          <delete file="{'${generated.empty.path}'}" />
-          <copy file="{'${generated.b4j.path}'}" todir="{'${USER.output.data.dir.path}'}" />
+          <delete file="${{generated.empty.path}}" />
+          <copy file="${{generated.b4j.path}}" todir="${{USER.output.data.dir.path}}" />
         </xsl:otherwise>
       </xsl:choose>
       
@@ -636,8 +635,8 @@
       <tstamp>
         <format property="std-date-today" pattern="yyyy-MM-dd" locale="en"/>
       </tstamp>
-      <zip destfile="{'${distrib.dir.path}'}\{'${std-date-today}'}-{'${distrib.zip.name}'}" update="no">
-        <zipfileset dir="." includes="{'${distrib.includes.pattern}'}" excludes="{'${distrib.excludes.pattern}'}" prefix="b4j"/>
+      <zip destfile="${{distrib.dir.path}}/${{std-date-today}}-${{distrib.zip.name}}" update="no">
+        <zipfileset dir="." includes="${{distrib.includes.pattern}}" excludes="${{distrib.excludes.pattern}}" prefix="b4j"/>
       </zip>
     </target>
     
