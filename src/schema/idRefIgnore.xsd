@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   xmlns:ignore="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/"
+   targetNamespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/"
+   elementFormDefault="qualified"
+>
+  <xsd:annotation>
+    <xsd:documentation>
+      Define Ids and IdRefs but do not include those values in encoded file,
+      only information needed for id resolution.
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <!-- elements: none -->
+  
+  <!-- complex types: none -->
+  
+  <!-- simple types: custom codecs -->
+  <xsd:simpleType name="Id">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="IdRef">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="FileName">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  
+</xsd:schema>
