@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="b4jConfig" basedir="." default="antConfig" xmlns="antlib:org.apache.tools.ant">
+
+  <!--
+  Project description: Config for Ant B4J build file
+  
+  Credits:
+    Author: Eric Bréchemier, January 2005
+  
+  -->
+  
+  <!-- Michael Kay Saxon -->
+  <property name="lib.path" value="lib"/>
+  <property name="saxon.jar" value="${lib.path}/saxon-6.5.3/saxon.jar"/>
+  
+  
+  
+  <!-- XSLT transforms -->
+  <property name="transform.path" value="src/ant/select-build.xsl"/>
+  <property name="indent.transform.path" value="src/utils/xmlToIndent.xsl"/>
+  
+  <!-- Build file -->
+  <property name="build.file.path" value="build.xml"/>
+  
+  
+  <!-- ant config -->
+  <target name="antConfig">
+    <condition property="b4jVersion" value="powerpack">
+      <not>
+        <isset property="b4jVersion"/>
+      </not>
+    </condition>
+    
+    <echo message="Generating ant build file for B4J ${b4jVersion} version ..." />
+    <property name="no.input.path" value="${transform.path}"/>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${build.file.path}"/>
+      <arg value="${no.input.path}"/>
+      <arg value="${transform.path}"/>
+      <arg value="b4j-version=${b4jVersion}"/>
+    </java>
+    <java jar="${saxon.jar}" fork="true">
+      <arg value="-o"/><arg value="${build.file.path}"/>
+      <arg value="${build.file.path}"/>
+      <arg value="${indent.transform.path}"/>
+      <arg value="indentWithUnit=  "/>
+    </java>
+    <echo message="Done." />
+  </target>
+  
+</project>
