@@ -64,7 +64,7 @@
   </xsd:complexType>
   
   <xsd:complexType name="ParentContinuation">
-    <xsd:attribute name="returnType" type="xsd:NCName" use="required"/>
+    <xsd:attribute name="returnType" type="xsd:string" use="required"/>
     <xsd:attribute name="returnVariable" type="xsd:NCName" use="required"/>
   </xsd:complexType>
   
