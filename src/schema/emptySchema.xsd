@@ -2,7 +2,7 @@
 <xsd:schema
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xsl:version="1.0"
-  xmlns:ant="#default"
+  xmlns:ant="antlib:org.apache.tools.ant"
   xsl:exclude-result-prefixes="xsl ant"
   
   elementFormDefault="qualified"
@@ -14,8 +14,8 @@
   xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config"
   xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava"
 >
-  <xsl:variable name="nsPrefix" select="/project/property[@name='USER.namespace.prefix']/@value" />
-  <xsl:variable name="nsURI" select="/project/property[@name='USER.namespace.uri']/@value" />
+  <xsl:variable name="nsPrefix" select="/ant:project/ant:property[@name='USER.namespace.prefix']/@value" />
+  <xsl:variable name="nsURI" select="/ant:project/ant:property[@name='USER.namespace.uri']/@value" />
   <xsl:attribute name="{$nsPrefix}:declareNamespace" namespace="{$nsURI}">ignore</xsl:attribute>
   <xsl:attribute name="targetNamespace">
     <xsl:value-of select="$nsURI" />
