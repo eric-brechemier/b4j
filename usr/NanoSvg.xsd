@@ -370,7 +370,7 @@
       <xsd:element ref="svg:content"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="ignore:Id"/>
-    <xsd:attribute name="includeFile" type="ignore:FileName" />
+    <xsd:attribute name="includeFile" type="ignore:FileName"/>
   </xsd:complexType>
   <xsd:complexType name="A">
     <xsd:annotation>
