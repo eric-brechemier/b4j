@@ -36,7 +36,7 @@ public class JarURIResolver implements URIResolver {
     
   }
   
-  // NOTA BENE set Source system Id using jar:// locator to avoir conversion to file:///C:/myPath
+  // NOTA BENE set Source system Id using jar:// locator to avoid conversion to file:///C:/myPath
   // e.g. stackTransformSource.setSystemId("jar:///xslt/powerpack/encoder/");
   public static String resolvePath (String href, String base) throws Exception {
     
@@ -47,7 +47,7 @@ public class JarURIResolver implements URIResolver {
     
     if (base.startsWith("file:///") ) {
       System.err.println("JarURIResolver.resolvePath> ERROR href="+href+" base="+base);
-      System.err.println("  Please set Source system Id using jar:// locator to avoir conversion to file:///C:/myPath");
+      System.err.println("  Please set Source system Id using jar:// locator to avoid conversion to file:///C:/myPath");
       throw new Exception("JarURIResolver: wrong system Id for base. href="+href+" base="+base);
     }
     
