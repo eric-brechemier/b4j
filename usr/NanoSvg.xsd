@@ -282,15 +282,15 @@
             <!--
             <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
             -->
-            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:parentContinuation returnType="Object" returnVariable="currentElement"/>
             <!--
             <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
             -->
-            <a4j:publish topic="useKeyRef" referree="currentElementAsReferree"/>
-            <a4j:subscribe topic="useKeyRef" referrer="currentElementAsReferrer"/>
+            <a4j:publish topic="useKeyRef" referree="currentElement"/>
+            <a4j:subscribe topic="useKeyRef" referrer="currentElement"/>
           </a4j:context>
           <a4j:onElementStart>
-            // User Java Code
+            currentElement = null;
           </a4j:onElementStart>
           <a4j:onAttributesEnd>
             // User Java Code
@@ -299,9 +299,6 @@
             //      } else {
             //        currentElement = new ElementType();
             //      }
-            Element currentElementAsReferree = currentElement;
-            Element currentElementAsReferrer = currentElement;
-            
           </a4j:onAttributesEnd>
           <a4j:onElementEnd>
             // User Java Code
@@ -309,8 +306,8 @@
         </a4j:events>
         <a4j:topic keyref="useKeyRef">
           <a4j:context>
-            <a4j:fromReferree object="ReferreeType referree"/>
-            <a4j:fromReferrer object="ReferrerType referrer"/>
+            <a4j:fromReferree object="Object referree"/>
+            <a4j:fromReferrer object="Object referrer"/>
           </a4j:context>
           <a4j:onMessage>
             // User Java Code
@@ -333,11 +330,15 @@
           <a4j:context>
             <!--
             <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
-            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            -->
+            <a4j:parentContinuation returnType="Object" returnVariable="currentElement"/>
+            <!--
             <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
             -->
+            <a4j:publish topic="useKeyRef" referree="currentElement"/>
           </a4j:context>
           <a4j:onElementStart>
+            currentElement = null;
             // User Java Code
           </a4j:onElementStart>
           <a4j:onAttributesEnd>
@@ -408,11 +409,15 @@
           <a4j:context>
             <!--
             <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
-            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            -->
+            <a4j:parentContinuation returnType="Object" returnVariable="currentElement"/>
+            <!--
             <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
             -->
+            <a4j:publish topic="useKeyRef" referree="currentElement"/>
           </a4j:context>
           <a4j:onElementStart>
+            currentElement = null;
             // User Java Code
           </a4j:onElementStart>
           <a4j:onAttributesEnd>
