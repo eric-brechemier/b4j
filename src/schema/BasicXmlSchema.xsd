@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   targetNamespace="http://www.w3.org/2001/XMLSchema"
+   elementFormDefault="qualified"
+>
+  <xsd:annotation>
+    <xsd:documentation>
+    Basic Schema for Xml Schema, defining a subset of Xml Schema 
+    for use with Binary 4 Java Encoder and Decoder Generator,
+    AND
+    defining User Defined Semantic Actions.
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <!-- elements: vocabulary -->
+  
+  <!-- overriden in Basic Xml Schema + Semantic Actions
+  <xsd:element name="schema" type="xsd:Schema" />
+  -->
+  
+  <xsd:element name="import" type="xsd:Import" />
+  <xsd:element name="annotation" type="xsd:Annotation" />
+  <xsd:element name="documentation" type="xsd:Documentation" />
+  
+  <!-- overriden in Basic Xml Schema + Semantic Actions
+  <xsd:element name="appinfo" type="xsd:Appinfo" />
+  -->
+  
+  <xsd:element name="element" type="xsd:Element" />
+  <xsd:element name="complexType" type="xsd:ComplexType" />
+  <xsd:element name="simpleType" type="xsd:SimpleType" />
+  
+  <xsd:element name="sequence" type="xsd:Sequence" />
+  <xsd:element name="choice" type="xsd:Choice" />
+  
+  <xsd:element name="attribute" type="xsd:Attribute" />
+  
+  <xsd:element name="simpleContent" type="xsd:SimpleContent" />
+  
+  <xsd:element name="extension" type="xsd:Extension" />
+  <xsd:element name="restriction" type="xsd:Restriction" />
+  
+  <xsd:element name="enumeration" type="xsd:Enumeration" />
+  
+  <xsd:element name="unique" type="xsd:Unique" />
+  <xsd:element name="key" type="xsd:Key" />
+  <xsd:element name="keyref" type="xsd:Keyref" />
+  
+  <xsd:element name="selector" type="xsd:Selector" />
+  <xsd:element name="field" type="xsd:Field" />
+  
+  <!-- complex types: grammar -->
+  <xsd:complexType name="Schema">
+    <xsd:sequence>
+      <xsd:element ref="xsd:annotation" minOccurs="0" maxOccurs="1"/>
+      <xsd:element ref="xsd:import" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="xsd:element" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="xsd:complexType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="xsd:simpleType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="elementFormDefault" type="xsd:string" fixed="qualified" use="required"/>
+    <xsd:attribute name="targetNamespace" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Import">
+    <xsd:attribute name="namespace" type="xsd:string" use="required"/>
+    <xsd:attribute name="schemaLocation" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Annotation">
+    <xsd:sequence>
+      <xsd:element ref="xsd:documentation" minOccurs="0"/>
+      <xsd:element ref="xsd:appinfo" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Documentation" mixed="true">
+    <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+      <xsd:any processContents="lax" />
+    </xsd:sequence>
+    <xsd:attribute name="source" type="xsd:anyURI"/>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- defined more precisely in including schema; cannot be defined twice 
+  <xsd:complexType name="Appinfo">
+    <xsd:choice minOccurs="1" maxOccurs="unbounded">
+      <xsd:any />
+    </xsd:choice>
+  </xsd:complexType>
+  -->
+  
+  <xsd:complexType name="ComplexType">
+    <xsd:sequence>
+      <xsd:element ref="xsd:annotation" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:sequence>
+          <xsd:choice minOccurs="0">
+            <xsd:element ref="xsd:sequence" />
+            <xsd:element ref="xsd:choice" />
+          </xsd:choice>
+          <xsd:element ref="xsd:attribute" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:element ref="xsd:simpleContent" />
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="SimpleType">
+    <xsd:sequence>
+      <xsd:element ref="xsd:restriction" />
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Sequence">
+    <xsd:sequence>
+      <xsd:element name="element" type="xsd:ElementRef" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Choice">
+    <xsd:sequence>
+      <xsd:element name="element" type="xsd:ShortElementRef" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="minOccurs" type="xsd:string" />
+    <xsd:attribute name="maxOccurs" type="xsd:string" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Element">
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+      <xsd:sequence>
+        <xsd:element ref="xsd:unique" />
+        <xsd:element ref="xsd:keyref" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:sequence>
+        <xsd:element ref="xsd:key" />
+        <xsd:element ref="xsd:keyref" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:choice>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="type" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="ShortElementRef">
+    <xsd:attribute name="ref" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="ElementRef">
+    <xsd:attribute name="ref" type="xsd:string" use="required"/>
+    <xsd:attribute name="minOccurs" type="xsd:string" />
+    <xsd:attribute name="maxOccurs" type="xsd:string" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Attribute">
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="type" type="xsd:string" use="required"/>
+    <xsd:attribute name="use" type="xsd:AttributeUse" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="SimpleContent">
+    <xsd:sequence>
+      <xsd:element ref="xsd:extension" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Extension">
+    <xsd:sequence>
+      <xsd:element ref="xsd:attribute" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="base" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Restriction">
+    <xsd:sequence>
+      <xsd:element ref="xsd:enumeration" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+    <xsd:attribute name="base" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Enumeration">
+    <xsd:attribute name="value" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Unique">
+    <xsd:sequence>
+      <xsd:element ref="xsd:selector"/>
+      <xsd:element ref="xsd:field"/>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Key">
+    <xsd:sequence>
+      <xsd:element ref="xsd:selector"/>
+      <xsd:element ref="xsd:field"/>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Keyref">
+    <xsd:sequence>
+      <xsd:element ref="xsd:selector"/>
+      <xsd:element ref="xsd:field"/>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required" />
+    <xsd:attribute name="refer" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Selector">
+    <xsd:attribute name="xpath" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  <xsd:complexType name="Field">
+    <xsd:attribute name="xpath" type="xsd:string" use="required" />
+  </xsd:complexType>
+  
+  
+  <xsd:simpleType name="AttributeUse">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="required"/>
+      <xsd:enumeration value="optional"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+</xsd:schema>
