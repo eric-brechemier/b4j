@@ -282,6 +282,8 @@
     </xsl:apply-templates>
   </xsl:template>
   
+  <!-- WORK IN PROGRESS HERE: differenciate xsd:float/double from fp:float/double processing -->
+  
   <xsl:template mode="processFloatValue" match=" xsd:attribute | xsd:simpleContent ">
     <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
