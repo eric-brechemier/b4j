@@ -258,7 +258,7 @@
     </xsl:choose>
     
     <xsl:comment> build number </xsl:comment>
-    <property name="build.number.property.path" value="encoder.version" />
+    <property name="build.number.property.path" value="${{USER.encoder.version.path}}" />
     
     <xsl:comment> Startup tasks </xsl:comment>
     
