@@ -42,9 +42,7 @@
     Author: Eric Bréchemier, October 2004
     Concept: Fabien Delpiano, May 2004
     
-    Uses MathFP (developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/)
-    Uses Saxon, and Xalan, and Jing, and XercesJarv, and Artistic Style.
-    
+    Uses Saxon, Xalan, Jing, XercesJarv, Artistic Style, Bearlib FP library.
     </xsl:comment>
     
     <xsl:comment> 
@@ -85,13 +83,19 @@
     
     <xsl:comment> FOLLOWING PROPERTIES SHOULD NOT BE MODIFIED </xsl:comment>
     
-    <xsl:comment> Michael Kay Saxon </xsl:comment>
+    <xsl:comment> Libraries </xsl:comment>
     <property name="lib.path" value="lib"/>
-    <property name="saxon.jar" value="{'${lib.path}/saxon-6.5.3/saxon.jar'}"/>
+    
+    <xsl:comment> Beartronics Fixed Point Library </xsl:comment>
+    <property name="fp.jar.path" value="${{lib.path}}/fplib-1.6/beartronics_fp-1.6.jar"/>
+    
+    <xsl:comment> Michael Kay Saxon </xsl:comment>
+    <property name="saxon.jar" value="${{lib.path}}/saxon-6.5.3/saxon.jar"/>
     
     <xsl:comment> Apache Xalan and java extension </xsl:comment>
     <property name="xalan.class" value="org.apache.xalan.xslt.Process"/> <xsl:comment> included in Java JRE </xsl:comment>
     <property name="encoder.java.extension.path" value="src/encoder/java"/>
+    <property name="encoder.java.extension.classpath" value="${{fp.jar.path}};${{encoder.java.extension.path}}"/>
     
     <xsl:comment> James Clark Jing, a validator for RELAX NG and other schema languages </xsl:comment>
     <property name="jing.jar" value="{'${lib.path}/jing-20030619/jing.jar'}"/>
@@ -144,6 +148,7 @@
       <xsl:comment> Eric Bréchemier B4J Power Pack </xsl:comment>
       <property name="powerpack.encoder.src.path" value="src/powerpack/encoder"/>
       <property name="powerpack.encoder.java.extension.path" value="{'${powerpack.encoder.src.path}/java'}"/>
+      <property name="powerpack.encoder.java.extension.classpath" value="${{encoder.java.extension.classpath}};${{powerpack.encoder.java.extension.path}};${{xerces-j.classpath}}"/>
       <property name="powerpack.encoder.generation.transform.path" value="{'${powerpack.encoder.src.path}/XsdToXsltEncoder.xsl'}"/>
       <property name="powerpack.b4j.encoder.transform.path" value="{'${powerpack.encoder.src.path}/B4jSimpleEncoder.xsl'}"/>
       <property name="powerpack.stacks.translation.transform.path" value="{'${powerpack.encoder.src.path}/ReplaceStacksInIsoB4J.xsl'}"/>
@@ -270,7 +275,7 @@
         <arg value="indentWithUnit=  "/>
       </java>
       
-      <copy file="{'${template.mathFP.schema.path}'}" todir="{'${USER.schema.dir.path}'}" />
+      <copy file="{'${template.fp.schema.path}'}" todir="{'${USER.schema.dir.path}'}" />
       <copy file="{'${template.include.idref.schema.path}'}" todir="{'${USER.schema.dir.path}'}" />
       <copy file="{'${template.ignore.idref.schema.path}'}" todir="{'${USER.schema.dir.path}'}" />
       <echo message="Done." />
@@ -413,12 +418,12 @@
       <xsl:choose>
         <xsl:when test="$isPowerPackVersion">
           <echo message="[Using PowerPack] Building Java Extension Class for Encoding through XSLT..." />
-          <javac srcdir="{'${encoder.java.extension.path}'}" classpath="{'${encoder.java.extension.path}'}"/>
-          <javac srcdir="{'${powerpack.encoder.java.extension.path}'}" classpath="{'${encoder.java.extension.path}'};{'${powerpack.encoder.java.extension.path}'}"/>
+          <javac srcdir="${{encoder.java.extension.path}}" classpath="${{encoder.java.extension.classpath}}"/>
+          <javac srcdir="${{powerpack.encoder.java.extension.path}}" classpath="${{powerpack.encoder.java.extension.classpath}}"/>
         </xsl:when>
         <xsl:otherwise>
           <echo message="Building Java Extension Class for Encoding through XSLT..." />
-          <javac srcdir="{'${encoder.java.extension.path}'}" classpath="{'${encoder.java.extension.path}'}"/>
+          <javac srcdir="${{encoder.java.extension.path}}" classpath="${{encoder.java.extension.classpath}}"/>
         </xsl:otherwise>
       </xsl:choose>
       
