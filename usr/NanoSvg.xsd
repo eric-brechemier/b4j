@@ -319,6 +319,10 @@
         </a4j:topic>
       </xsd:appinfo>
     </xsd:annotation>
+    <!-- TEST -->
+    <xsd:choice minOccurs="0" maxOccurs="0">
+      <xsd:element ref="svg:use"/>
+    </xsd:choice>
     <xsd:attribute name="id" type="ignore:Id"/>
     <xsd:attribute name="href" type="ignore:IdRef" use="required"/>
   </xsd:complexType>
