@@ -49,10 +49,23 @@
       &lt;ONLY PROPERTIES TO MODIFY&gt; 
     </xsl:comment>
       <xsl:comment> 
+      This build file was intended for use in two different scenarios:
+        * With B4J fully included in your project, 
+            - keep project basedir="." and 
+            - keep USER.project.dir.path location="."
+        * With B4J shared by your different projects, 
+            - set project basedir="B4J relative location" and 
+            - set USER.project.dir.path to your project location.
+      Many thanks for your attention,
+      B4J Team
+      </xsl:comment>
+      <xsl:comment>&lt;property name="USER.project.dir.path" location="C:\programs\eclipse\workspace\USERPROJECT"/&gt;</xsl:comment>
+      <property name="USER.project.dir.path" location="."/>
+      <xsl:comment> 
         input files 
       </xsl:comment>
-      <property name="USER.schema.dir.path" value="usr"/>
-      <property name="USER.input.data.path" value="usr/testSample.xml"/>
+      <property name="USER.schema.dir.path" location="${{USER.project.dir.path}}/usr"/>
+      <property name="USER.input.data.path" location="${{USER.project.dir.path}}/usr/testSample.xml"/>
       <property name="USER.schema.name" value="NanoSvg.xsd"/>
       <property name="USER.namespace.uri" value="http://eric.brechemier.name/2004/b4j/user-project"/>
       <property name="USER.namespace.prefix" value="usr"/>
@@ -60,16 +73,19 @@
       <xsl:comment> 
         java destination project 
       </xsl:comment>
-      <property name="USER.output.data.name" value="gameData"/> <!-- without extension -->
-      <property name="USER.output.data.dir.path" value="../myProject/"/>
-      
-      <property name="USER.decoder.java.package" value="#default" /> <!-- #default for default package -->
-      <property name="USER.java.package.dir.path" value="C:\programs\eclipse\workspace\MIDPESG\psrc"/>
+      <property name="USER.output.data.dir.path" location="${{USER.project.dir.path}}/data"/>
+      <xsl:comment> without extension </xsl:comment>
+      <property name="USER.output.data.name" value="gameData"/>
+      <xsl:comment> #default for default package </xsl:comment>
+      <property name="USER.decoder.java.package" value="#default" />
+      <xsl:comment> including package directories </xsl:comment>
+      <property name="USER.java.package.dir.path" location="${{USER.project.dir.path}}/src"/> 
       
       <xsl:comment> 
         version 
       </xsl:comment>
       <property name="USER.include.version.number.TRUE" value="set name end to TRUE or FALSE to use this feature" />
+      <property name="USER.encoder.version.path" location="${{USER.project.dir.path}}/encoder.version" />
     <xsl:comment>
     &lt;/ONLY PROPERTIES TO MODIFY&gt; 
     
