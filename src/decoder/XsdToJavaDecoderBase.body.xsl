@@ -243,7 +243,7 @@
   </xsl:template>
   
   <xsl:template mode="processRadAngleValue" match=" xsd:attribute | xsd:simpleContent ">
-    <!-- int because of mathFP -->
+    <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
       <xsl:with-param name="type" select="'int'" />
       <xsl:with-param name="readMethod" select="'readInt'"/>
@@ -251,7 +251,7 @@
   </xsl:template>
   
   <xsl:template mode="processCosRadAngleValue" match=" xsd:attribute | xsd:simpleContent ">
-    <!-- int because of mathFP -->
+    <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
       <xsl:with-param name="type" select="'int'" />
       <xsl:with-param name="readMethod" select="'readInt'"/>
@@ -259,7 +259,7 @@
   </xsl:template>
   
   <xsl:template mode="processSinRadAngleValue" match=" xsd:attribute | xsd:simpleContent ">
-    <!-- int because of mathFP -->
+    <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
       <xsl:with-param name="type" select="'int'" />
       <xsl:with-param name="readMethod" select="'readInt'"/>
@@ -267,7 +267,7 @@
   </xsl:template>
   
   <xsl:template mode="processMinusRadCosAngleValue" match=" xsd:attribute | xsd:simpleContent ">
-    <!-- int because of mathFP -->
+    <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
       <xsl:with-param name="type" select="'int'" />
       <xsl:with-param name="readMethod" select="'readInt'"/>
@@ -275,7 +275,7 @@
   </xsl:template>
   
   <xsl:template mode="processMinusSinRadAngleValue" match=" xsd:attribute | xsd:simpleContent ">
-    <!-- int because of mathFP -->
+    <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
       <xsl:with-param name="type" select="'int'" />
       <xsl:with-param name="readMethod" select="'readInt'"/>
@@ -283,7 +283,7 @@
   </xsl:template>
   
   <xsl:template mode="processFloatValue" match=" xsd:attribute | xsd:simpleContent ">
-    <!-- int because of mathFP -->
+    <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
       <xsl:with-param name="type" select="'int'" />
       <xsl:with-param name="readMethod" select="'readInt'"/>
@@ -291,7 +291,7 @@
   </xsl:template>
   
   <xsl:template mode="processDoubleValue" match=" xsd:attribute | xsd:simpleContent ">
-    <!-- int because of mathFP -->
+    <!-- int for FP -->
     <xsl:apply-templates mode="decodeTypedValue" select=".">
       <xsl:with-param name="type" select="'double'" />
       <xsl:with-param name="readMethod" select="'readDouble'"/>
