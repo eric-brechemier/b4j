@@ -42,7 +42,10 @@
   <xsd:element name="extension" type="xsd:Extension" />
   <xsd:element name="restriction" type="xsd:Restriction" />
   
-  <xsd:element name="enumeration" type="xsd:Enumeration" />
+  <xsd:element name="enumeration" type="xsd:Facet" />
+  <xsd:element name="minInclusive" type="xsd:Facet" />
+  <xsd:element name="maxInclusive" type="xsd:Facet" />
+  <!-- TODO: add more supported facets -->
   
   <xsd:element name="unique" type="xsd:Unique" />
   <xsd:element name="key" type="xsd:Key" />
@@ -175,13 +178,16 @@
   </xsd:complexType>
   
   <xsd:complexType name="Restriction">
-    <xsd:sequence>
-      <xsd:element ref="xsd:enumeration" minOccurs="0" maxOccurs="unbounded" />
-    </xsd:sequence>
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+      <xsd:element ref="xsd:enumeration" />
+      <xsd:element ref="xsd:minInclusive" />
+      <xsd:element ref="xsd:maxInclusive" />
+      <!-- TODO: add more supported facets -->
+    </xsd:choice>
     <xsd:attribute name="base" type="xsd:string" use="required" />
   </xsd:complexType>
   
-  <xsd:complexType name="Enumeration">
+  <xsd:complexType name="Facet">
     <xsd:attribute name="value" type="xsd:string" use="required" />
   </xsd:complexType>
   
