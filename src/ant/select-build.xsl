@@ -40,6 +40,7 @@
     
     Credits:
     Author: Eric Bréchemier, October 2004
+    Concept: Fabien Delpiano, May 2004
     
     Uses MathFP (developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/)
     Uses Saxon, and Xalan, and Jing, and XercesJarv, and Artistic Style.
