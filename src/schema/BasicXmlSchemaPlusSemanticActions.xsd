@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   targetNamespace="http://www.w3.org/2001/XMLSchema"
+   elementFormDefault="qualified"
+   
+   xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config"
+   xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava"
+>
+  <xsd:include schemaLocation="BasicXmlSchema.xsd"/>
+  
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/config" schemaLocation="B4JConfig.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" schemaLocation="B4JActionsForJava.xsd"/>
+  
+  <xsd:annotation>
+    <xsd:documentation>
+      Basic Schema for Xml Schema, defining a subset of Xml Schema 
+      for use with Binary 4 Java Encoder and Decoder Generator,
+      AND
+      defining User Defined Semantic Actions.
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <!-- elements: vocabulary -->
+  <xsd:element name="schema" type="xsd:Schema">
+    <xsd:key name="keyrefName">
+      <xsd:selector xpath=".//xsd:keyref"/>
+      <xsd:field xpath="@name"/>
+    </xsd:key>
+    <xsd:keyref name="oneKeyrefForEachTopic" refer="xsd:keyrefName">
+      <xsd:selector xpath=".//a4j:topic"/>
+      <xsd:field xpath="@keyref"/>
+    </xsd:keyref>
+    
+    <xsd:key name="topicKeyref">
+      <xsd:selector xpath=".//a4j:topic"/>
+      <xsd:field xpath="@keyref"/>
+    </xsd:key>
+    <xsd:keyref name="oneTopicForEachPublish" refer="xsd:topicKeyref">
+      <xsd:selector xpath=".//a4j:publish"/>
+      <xsd:field xpath="@topic"/>
+    </xsd:keyref>
+    
+  </xsd:element>
+  
+  <xsd:element name="appinfo" type="xsd:Appinfo">
+    <xsd:key name="localTopicKeyref">
+      <xsd:selector xpath=".//a4j:topic"/>
+      <xsd:field xpath="@keyref"/>
+    </xsd:key>
+    <xsd:keyref name="oneTopicForEachSubscribe" refer="xsd:localTopicKeyref">
+      <xsd:selector xpath=".//a4j:subscribe"/>
+      <xsd:field xpath="@topic"/>
+    </xsd:keyref>
+  </xsd:element>
+  
+  <!-- complex types: grammar -->
+  <xsd:complexType name="Appinfo">
+    <xsd:choice>
+      <xsd:sequence>
+        <xsd:element ref="config:root" />
+        <xsd:element ref="a4j:packages" />
+        <xsd:element ref="a4j:globalDef" />
+        <xsd:element ref="a4j:events" />
+      </xsd:sequence>
+      <xsd:sequence>
+        <xsd:element ref="a4j:events" />
+        <xsd:element ref="a4j:topic" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:choice>
+  </xsd:complexType>
+  
+</xsd:schema>
