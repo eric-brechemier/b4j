@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   
+   xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config"
+   targetNamespace="http://eric.brechemier.name/2004/generation/encoder-decoder/config"
+   elementFormDefault="qualified"
+>
+  <xsd:annotation>
+    <xsd:documentation>
+      Configuration data for Binary For Java Encoder/Decoder Generator.
+    </xsd:documentation>
+  </xsd:annotation>
+  
+  <!-- elements: vocabulary -->
+  <xsd:element name="root" type="config:Root" />
+  
+  <!-- complex types: grammar -->
+  <xsd:complexType name="Root">
+    <xsd:attribute name="element" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+</xsd:schema>
