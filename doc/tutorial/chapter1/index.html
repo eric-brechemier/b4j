@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Chapter 1: Discover the game...</title>
+  </head>
+  <body>
+    <h1>Chapter 1: Enter in the Game...</h1>
+      <p>
+        This tutorial will guide you through common use of the Binary for Java (B4J) tool.
+        For the needs of this tutorial, you'll be a game developer, working on the first version
+        of <em>"Guess me right"</em>, a quizz game for two players.
+      </p>
+      <h2>Game Rules</h2>
+        <p>
+          The first player, Amy, writes the quizz and tries to guess what the second player would answer.
+          The second player, Brian answers questions; for each answer corresponding to Amy guessing, 
+          the team scores one point. The final score tells you how well you know each other.
+        </p>
+      <h2>Tutorial Overview</h2>
+        <p>
+          Your mission, if you accept it, is to write the grammar file used by the B4J tool
+          to generate a binary file encoder and the corresponding decoding code in Java.
+          By adding semantic actions as annotations in the grammar file, you will be able
+          to define game actions executed at different steps of decoding.
+        </p>
+      <h2>Tutorial Limits</h2>
+        <p>
+          In a real-life project, your decoding code would not be game actions, but would correspond
+          to game objects construction, during a single loading phase before the game starts.
+        </p>
+      <h2>Game Data</h2>
+        <p>
+        We suppose Amy has already created the quizz, e.g. through a web form, or using
+        a simple text editor. <a href="gameData.xml">HERE</a> is the corresponding game data file, which should be
+        encoded, then sent over-the-air to Brian's mobile phone. This is a simple xml file, created using
+        the Windows Notepad with UTF-8 encoding.
+        </p>
+      <h2>First Step: Check Install</h2>
+        <p>
+        By now, Apache Ant (1.6.1 or higher) and Sun Java JDK (1.4 or higher) should be installed,
+        and present in your classpath.
+        Check it typing <pre>ant -version</pre> then <pre>java -version</pre> on DOS prompt.
+        </p>
+        <p>
+        Unzip B4J archive and change dir to b4j directory. Typing <pre>ant</pre> you should get
+        an overview of available tasks.
+        </p>
+      <h2>Next</h2>
+        <p>
+        Go on to <a href="../chapter2/index.html">Chapter 2...</a>
+        </p>
+  </body>
+</html>

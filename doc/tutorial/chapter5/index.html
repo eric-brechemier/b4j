@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Chapter 5: Writing your custom decoding code...</title>
+  </head>
+  <body>
+    <h1>Chapter 5: Semantic Actions</h1>
+      <p>
+        We're now back to the interesting part: working on your game code.
+        We're going to add annotations in grammar file, to declare the custom actions
+        we want to execute on decoding.
+      </p>
+      <h2>Adding Semantic Actions</h2>
+        <p>
+          <pre>ant addSemanticActions</pre> adds empty annotations to your grammar file.
+          <a href="GuessMeRight-emty-actions.xsd">THIS</a> is resulting file.
+        </p>
+      <h2>Saving, Loading and Removing Semantic Actions</h2>
+        <p>
+          Use <pre>ant saveSchema</pre>
+          <pre>ant loadSchema</pre>
+          to save and load your schema (copying the schema file) and
+          <pre>ant removeSemanticActions</pre>
+          to clean the schema from all semantic actions.
+        </p>
+      <h2>Global Declarations</h2>
+        <p>
+          Just under xsd:schema element are global declarations.
+          B4J produces one decoding class with static fields only.
+          This is the place you declare custom fields to add, and
+          the main decoding method params and return type, and custom code
+          to execute within.
+        </p>  
+        <p>
+          The first element, quizz, has been configured as root element (config:root). <br />
+          Let's add three static attributes to store Brian scores in each category,
+          and one to store the team score.
+        </p>
+        <p>
+          We then add a main method to launch data decoding 
+          (In this tutorial, we use the generated Decoder class as our only game class). <br />
+          The first param of decodeDocument is not declared, but a DataInputStream is expected,
+          corresponding to binary data to decode.<br />
+          We have to import java.io.FileInputStream and java.io.FileNotFoundException,
+          but DataInputStream is already available.<br />
+          <i>Cheat: <a href="GuessMeRight-global-actions.xsd">THIS</a> is current grammar file.</i>
+        </p>
+        <p>
+          As we don't build objects from decoded data, we have to comment out all a4j:onEachChildEnd
+          annotations. <a href="GuessMeRight-first-game.xsd">HERE</a> is resulting grammar file.
+          <br />
+          We can now generate the first version of our game.
+        </p>
+      <h2>Generating Decoder</h2>
+        <p>
+          <pre>ant generateDecoder</pre> generates <a href="B4JDecoder.java">decoder class</a> including your custom code,
+          and copies it to your target project destination. In this tutorial, you should find 
+          this class in b4j\output\decoder as well as in GuessMeRight\src\com\example.
+        </p>
+      <h2>Testing the Game</h2>
+        <p>
+          Change dir to GuessMeRight and compile the game using
+          <pre>javac src\com\example\*.java -encoding ISO-8859-1 -d .</pre>
+          Rename game data file to <a href="gameData.b4j">gameData.b4j</a> and copy it to GuessMeRight.
+          Launch the game with
+          <pre>java com.example.B4JDecoder</pre>
+          We still have to write game actions on each element decoding.
+        </p>
+      <h2>Semantic Actions for Each Element</h2>
+        <p>
+        Semantic actions are defined in a very similar way for each element.
+        Different tags correspond to the successive decoding steps. <br />
+        You are now free to define your game actions.
+        </p>
+      <h2>The End</h2>
+        <p>
+        <i>
+          Cheat: <a href="GuessMeRight-final.xsd">HERE</a> is the final grammar file, corresponding to working game.<br />
+          Game data file was <a href="gameData-final.xml">modified</a> to add missing information. <br />
+        </i>
+        Next lesson: Using the Power Pack for Id and Ref management... <br />
+        back to <a href="../chapter1/index.html">Chapter 1</a>
+        or <a href="../chapter2/index.html">Chapter 2</a>
+        or <a href="../chapter3/index.html">Chapter 3</a>
+        or <a href="../chapter4/index.html">Chapter 4</a>.
+        </p>
+  </body>
+</html>

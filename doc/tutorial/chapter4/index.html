@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Chapter 4: Encoding data...</title>
+  </head>
+  <body>
+    <h1>Chapter 4: Encoding Game Data</h1>
+      <p>
+        You have now completed all steps required to encode game data. <br />
+        Just launch
+        <pre>ant encoding</pre>
+        to get <a href="simpleSample.b4j">binary 4 java file</a> (binary file encoded using Java standard methods)
+        in b4j\output\encoder. <br />
+        This is your final binary game data, which won't evolve through following tutorial steps.
+        The specific part of corresponding encoder is this <a href="IsoB4jEncoder.xsl">generated XSLT transform.</a>
+      </p>
+      <h2>Test decoding</h2>
+        <p>
+          To double-check the content of your binary game data file, you can
+          <ul>
+            <li>open this <a href="simpleSample.isob4j.xml">intermediate xml file</a> corresponding to xml encoding instructions,</li>
+            <li>
+              and launch <pre>ant testDecoding</pre> which produces a 
+              <a href="simpleSample.b4j.decoded.xml">fac-simile</a> 
+              of xml encoding instructions back from binary file.
+            </li>
+          </ul>
+        </p>
+      <h2>That's all about encoding!</h2>
+      <h2>Next</h2>
+        <p>
+        Go on to <a href="../chapter5/index.html">Chapter 5...</a><br />
+        or back 
+        to <a href="../chapter1/index.html">Chapter 1</a>
+        or <a href="../chapter2/index.html">Chapter 2</a>
+        or <a href="../chapter3/index.html">Chapter 3</a>.
+        </p>
+  </body>
+</html>

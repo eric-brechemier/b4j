@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:include="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" xmlns:ignore="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" xmlns:mathFP="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config" xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava" xmlns:gmr="http://www.example.com/Guess_Me_Right" elementFormDefault="qualified" targetNamespace="http://www.example.com/Guess_Me_Right">
+  <xsd:annotation>
+    <xsd:appinfo>
+      <config:root element="quizz"/>
+      <a4j:packages>
+        // Java imports
+        import java.io.FileInputStream;
+        import java.io.FileNotFoundException;
+
+        import java.io.BufferedReader;
+        import java.io.InputStreamReader;
+      </a4j:packages>
+      <a4j:globalDef>
+        static byte[] categoryCount;
+                
+        static byte teamScore = 0;
+
+        public static void main(String[] args) {
+          DataInputStream data = null;
+          try {
+            data = new DataInputStream( new FileInputStream("gameData.b4j") ); 
+          } catch (FileNotFoundException e) {
+            System.out.println("gameData.b4j was not found.");
+          }
+          
+          decodeDocument(data);
+        }
+
+
+        private static String readKeyBoardInput()
+        {
+          BufferedReader br = new BufferedReader( new InputStreamReader(System.in) );
+          try
+          {
+            return br.readLine();
+          }
+          catch(IOException ioe)
+          {
+             ioe.printStackTrace();  
+             return null;
+          }
+        }
+      
+      </a4j:globalDef>
+      <a4j:events>
+        <a4j:context>
+          <!--
+          <a4j:fromParent>short param, int otherParam,...</a4j:fromParent>
+          <a4j:parentContinuation returnType="GlobalDocumentType" returnVariable="document"/>
+          <a4j:childContinuation>null, otherParam,...</a4j:childContinuation>
+          -->
+        </a4j:context>
+        <a4j:onDocumentStart>
+          System.out.println("Bienvenue dans Guess Me Right!");
+          categoryCount = new byte[3];
+        </a4j:onDocumentStart>
+        <!--
+        <a4j:onEachChildEnd fromChild="RootType root">
+          // User Java Code
+          // e.g. document = root;
+        </a4j:onEachChildEnd>
+        -->
+        <a4j:onDocumentEnd>
+          System.out.println("Votre score est : "+teamScore);
+          System.out.println("Merci d'avoir joué!");
+          categoryCount = null;
+        </a4j:onDocumentEnd>
+        <!--
+        <a4j:onError name="e">
+        
+        </a4j:onError>
+        -->
+      </a4j:events>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/" schemaLocation="idRefIgnore.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/" schemaLocation="idRefInclude.xsd"/>
+  <xsd:import namespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/" schemaLocation="mathFP.xsd"/>
+  <!--
+  elements: User Vocabulary
+  -->
+  <!--
+  Each element refers to a complexType through its type attribute.
+  Using ant addSchemaTypes, missing complexTypes will be added, using type value as hints:
+  - when type="st", a simple content complexType is created (element with text value)
+  e.g. <xsd:element name="root" type="st" />
+  - when type="ch" or type="choice" a complex type with children in a choice is created
+  e.g. <xsd:element name="root" type="ch" />
+  - when type="seq" or type="sequence" a complex type with children in a sequence is created
+  e.g. <xsd:element name="root" type="seq" />
+  - when type attribute is missing a complex type without children is created
+  e.g. <xsd:element name="root" />
+  - when a qualified name is provided (prefix:localName), localName is used as the complexType name
+  e.g. <xsd:element name="root" type="usr:Root" />
+  -->
+  <xsd:element name="quizz" type="gmr:Quizz"/>
+  <xsd:element name="questions" type="gmr:Questions"/>
+  <xsd:element name="result" type="gmr:Result"/>
+  <xsd:element name="question" type="gmr:Question"/>
+  <xsd:element name="text" type="gmr:Text"/>
+  <xsd:element name="answer" type="gmr:Answer"/>
+  <xsd:element name="category" type="gmr:Category"/>
+  <!--
+  complexTypes defining tree structure: User Grammar
+  NOTA simpleTypes may be used to rename standard types, and for custom codec in future versions.
+  -->
+  <!--
+  Using ant addSchemaAnnotations, missing annotations are added to schema & complex types
+  -->
+  <xsd:complexType name="Quizz">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+            if (isAtTopicPresent) {
+               System.out.println("Le thème de ce questionnaire est : "+atTopic);
+            }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            // User Java Code
+            // e.g. ChildType[] children = new ChildType[childCount];
+            //      currentElement.setChildren(children);
+          </a4j:onChildrenCount>
+          <!--
+          <a4j:onEachChildEnd fromChild="ChildType child" position="i">
+            // User Java Code
+            // e.g. children[i]=child;
+          </a4j:onEachChildEnd>
+          -->
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element ref="gmr:questions" minOccurs="1" maxOccurs="1"/>
+      <xsd:element ref="gmr:result" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+    <xsd:attribute name="topic" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="Questions">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            // User Java Code
+            // e.g. ChildType[] children = new ChildType[childCount];
+            //      currentElement.setChildren(children);
+          </a4j:onChildrenCount>
+          <!--
+          <a4j:onEachChildEnd fromChild="ChildType child" position="i">
+            // User Java Code
+            // e.g. children[i]=child;
+          </a4j:onEachChildEnd>
+          -->
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element ref="gmr:question" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Result">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            System.out.println("Fin de la partie.");
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            boolean dominantFound = false;
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd fromChild="String text" position="i">
+            if ( categoryCount[i]==2 || categoryCount[i]==3 ) {
+              System.out.println(text);
+              dominantFound=true;
+            }
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+            if (!dominantFound) {
+              System.out.println("Pas de personnalité dominante.");
+            }
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element ref="gmr:category" minOccurs="3" maxOccurs="3"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Question">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            <a4j:parentContinuation returnType="ElementType" returnVariable="currentElement"/>
+            -->
+            <a4j:childContinuation>categoryMatching, i</a4j:childContinuation>
+          </a4j:context>
+          <a4j:onElementStart>
+            byte[] categoryMatching = new byte[3];
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onChildrenCount alias="childCount">
+            // User Java Code
+            // e.g. ChildType[] children = new ChildType[childCount];
+            //      currentElement.setChildren(children);
+          </a4j:onChildrenCount>
+          <a4j:onEachChildEnd fromChild="String text" position="i">
+            if (text != null) {
+              System.out.println("Q. "+i+") "+text);
+            }
+          </a4j:onEachChildEnd>
+          <a4j:onElementEnd>
+            String userChoice = readKeyBoardInput();
+            while( ! (userChoice.equals("1") || userChoice.equals("2") || userChoice.equals("3") ) ) {
+              System.out.println("1 2 or 3 expected...");
+              userChoice = readKeyBoardInput();
+            }
+            int choice = Integer.parseInt(userChoice);
+            int category = categoryMatching[choice-1];
+            categoryCount[ category ]++; 
+            
+            if (category == atPrediction)
+              teamScore++;
+
+            categoryMatching = null;
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element ref="gmr:text" minOccurs="1" maxOccurs="1"/>
+      <xsd:element ref="gmr:answer" minOccurs="3" maxOccurs="3"/>
+    </xsd:sequence>
+    <xsd:attribute name="title" type="xsd:string"/>
+    <xsd:attribute name="prediction" type="xsd:byte" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="Text">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <a4j:fromParent>byte[] categoryMatching, short i</a4j:fromParent>
+            <a4j:parentContinuation returnType="String" returnVariable="nothing"/>
+          </a4j:context>
+          <a4j:onElementStart>
+            nothing = null;
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onValueEnd alias="textValue">
+            // User Java Code
+            // e.g. currentElement.text = textValue;
+            System.out.println(textValue);
+          </a4j:onValueEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="Answer">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <a4j:fromParent>byte[] categoryMatching, short i</a4j:fromParent>
+            <a4j:parentContinuation returnType="String" returnVariable="text"/>
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            categoryMatching[i-1]=atCategory;
+          </a4j:onAttributesEnd>
+          <a4j:onValueEnd alias="textValue">
+            text = textValue;
+          </a4j:onValueEnd>
+          <a4j:onElementEnd>
+            // User Java Code
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="category" type="xsd:byte" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="Category">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <a4j:events>
+          <a4j:context>
+            <!--
+            <a4j:fromParent>Object parentElement, int otherParam,...</a4j:fromParent>
+            -->
+            <a4j:parentContinuation returnType="String" returnVariable="text"/>
+            <!--
+            <a4j:childContinuation>currentElement, otherParam,...</a4j:childContinuation>
+            -->
+          </a4j:context>
+          <a4j:onElementStart>
+            // User Java Code
+          </a4j:onElementStart>
+          <a4j:onAttributesEnd>
+            // User Java Code
+            // e.g. if (isAtIdPresent) {
+            //        currentElement = new ElementType(atId);
+            //      } else {
+            //        currentElement = new ElementType();
+            //      }
+          </a4j:onAttributesEnd>
+          <a4j:onValueEnd alias="textValue">
+            text = textValue;
+          </a4j:onValueEnd>
+          <a4j:onElementEnd>
+            
+          </a4j:onElementEnd>
+        </a4j:events>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="id" type="xsd:byte" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

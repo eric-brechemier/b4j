@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<isob4j:document xmlns:isob4j="http://eric.brechemier.name/2004/bin4java/isoXml" xmlns:stack="http://eric.brechemier.name/2004/bin4java/stacks">
+   <isob4j:element description="quizz">
+      <isob4j:mask bit1="1" bit1Description="is topic present"/>
+      <isob4j:string description="topic">Jeux de Rôles</isob4j:string>
+      <isob4j:short description="questions count">1</isob4j:short>
+      <isob4j:short description="result count">1</isob4j:short>
+      <isob4j:element description="questions">
+         <isob4j:short description="question count">3</isob4j:short>
+         <isob4j:element description="question">
+            <isob4j:mask bit1="1" bit1Description="is title present"/>
+            <isob4j:string description="title">Une porte...</isob4j:string>
+            <isob4j:short description="text count">1</isob4j:short>
+            <isob4j:short description="answer count">3</isob4j:short>
+            <isob4j:element description="text">
+               <isob4j:string description="text value">Vous êtes dans un donjon ; alors que vous arrivez devant une porte, vous entendez des craquements étranges de l'autre côté. Que faîtes-vous ?</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">humain</isob4j:string>
+               <isob4j:string description="text value">j'ouvre la porte, avec appréhension</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">elfe</isob4j:string>
+               <isob4j:string description="text value">je passe devant en sifflotant, et je cherche un autre chemin</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">nain</isob4j:string>
+               <isob4j:string description="text value">je défonce la porte joyeusement</isob4j:string>
+            </isob4j:element>
+         </isob4j:element>
+         <isob4j:element description="question">
+            <isob4j:mask bit1="1" bit1Description="is title present"/>
+            <isob4j:string description="title">Un arbre...</isob4j:string>
+            <isob4j:short description="text count">1</isob4j:short>
+            <isob4j:short description="answer count">3</isob4j:short>
+            <isob4j:element description="text">
+               <isob4j:string description="text value">Vous vous promenez dans la nature, en quête d'aventures. En sortant d'une clairière, un petit arbre se dresse sur votre chemin et entrave totalement votre passage. Que faites-vous ?</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">elfe</isob4j:string>
+               <isob4j:string description="text value">je grimpe sur l'arbre jusqu'à mi-hauteur, et me laisse tomber de l'autre côté avec une petite roulade</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">humain</isob4j:string>
+               <isob4j:string description="text value">je coupe quelques branches pour me frayer un passage</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">nain</isob4j:string>
+               <isob4j:string description="text value">je coupe les branches qui me gênent, puis les autres, puis le tronc, et je pisse dessus.</isob4j:string>
+            </isob4j:element>
+         </isob4j:element>
+         <isob4j:element description="question">
+            <isob4j:mask bit1="1" bit1Description="is title present"/>
+            <isob4j:string description="title">Une grotte...</isob4j:string>
+            <isob4j:short description="text count">1</isob4j:short>
+            <isob4j:short description="answer count">3</isob4j:short>
+            <isob4j:element description="text">
+               <isob4j:string description="text value">Un peu plus loin, une grotte s'enfonce profondément dans la montagne.</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">nain</isob4j:string>
+               <isob4j:string description="text value">Ah, qu'il fait bon rentrer chez soi</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">elfe</isob4j:string>
+               <isob4j:string description="text value">Il fait bien noir là-dedans. Restons dehors profiter du soleil.</isob4j:string>
+            </isob4j:element>
+            <isob4j:element description="answer">
+               <isob4j:mask bit1="1" bit1Description="is category present"/>
+               <isob4j:string description="category">humain</isob4j:string>
+               <isob4j:string description="text value">Une grotte ? Où ça ?</isob4j:string>
+            </isob4j:element>
+         </isob4j:element>
+      </isob4j:element>
+      <isob4j:element description="result">
+         <isob4j:short description="category count">3</isob4j:short>
+         <isob4j:element description="category">
+            <isob4j:mask bit1="1" bit1Description="is name present"/>
+            <isob4j:string description="name">nain</isob4j:string>
+            <isob4j:string description="text value">Vous, Vous êtes bien un nain !</isob4j:string>
+         </isob4j:element>
+         <isob4j:element description="category">
+            <isob4j:mask bit1="1" bit1Description="is name present"/>
+            <isob4j:string description="name">elfe</isob4j:string>
+            <isob4j:string description="text value">Vous avez plutôt l'air d'un elfe...</isob4j:string>
+         </isob4j:element>
+         <isob4j:element description="category">
+            <isob4j:mask bit1="1" bit1Description="is name present"/>
+            <isob4j:string description="name">humain</isob4j:string>
+            <isob4j:string description="text value">Vous n'êtes qu'un humain, finalement.</isob4j:string>
+         </isob4j:element>
+      </isob4j:element>
+   </isob4j:element>
+</isob4j:document>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<isob4j:document xmlns:isob4j="http://eric.brechemier.name/2004/bin4java/isoXml">
+   <isob4j:element description="Quizz">
+      <isob4j:mask bit1="1"/>
+      <isob4j:String description="atTopic">Jeux de Rôles</isob4j:String>
+      <isob4j:short description="__sequenceCount1">1</isob4j:short>
+      <isob4j:short description="__sequenceCount2">1</isob4j:short>
+      <isob4j:element description="Questions">
+         <isob4j:short description="__sequenceCount1">3</isob4j:short>
+         <isob4j:element description="Question">
+            <isob4j:mask bit1="1"/>
+            <isob4j:String description="atTitle">Une porte...</isob4j:String>
+            <isob4j:short description="__sequenceCount1">1</isob4j:short>
+            <isob4j:short description="__sequenceCount2">3</isob4j:short>
+            <isob4j:element description="Text">
+               <isob4j:String description="__value">Vous êtes dans un donjon ; alors que vous arrivez devant une porte, vous entendez des craquements étranges de l'autre côté. Que faîtes-vous ?</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">humain</isob4j:String>
+               <isob4j:String description="__value">j'ouvre la porte, avec appréhension</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">elfe</isob4j:String>
+               <isob4j:String description="__value">je passe devant en sifflotant, et je cherche un autre chemin</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">nain</isob4j:String>
+               <isob4j:String description="__value">je défonce la porte joyeusement</isob4j:String>
+            </isob4j:element>
+         </isob4j:element>
+         <isob4j:element description="Question">
+            <isob4j:mask bit1="1"/>
+            <isob4j:String description="atTitle">Un arbre...</isob4j:String>
+            <isob4j:short description="__sequenceCount1">1</isob4j:short>
+            <isob4j:short description="__sequenceCount2">3</isob4j:short>
+            <isob4j:element description="Text">
+               <isob4j:String description="__value">Vous vous promenez dans la nature, en quête d'aventures. En sortant d'une clairière, un petit arbre se dresse sur votre chemin et entrave totalement votre passage. Que faites-vous ?</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">elfe</isob4j:String>
+               <isob4j:String description="__value">je grimpe sur l'arbre jusqu'à mi-hauteur, et me laisse tomber de l'autre côté avec une petite roulade</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">humain</isob4j:String>
+               <isob4j:String description="__value">je coupe quelques branches pour me frayer un passage</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">nain</isob4j:String>
+               <isob4j:String description="__value">je coupe les branches qui me gênent, puis les autres, puis le tronc, et je pisse dessus.</isob4j:String>
+            </isob4j:element>
+         </isob4j:element>
+         <isob4j:element description="Question">
+            <isob4j:mask bit1="1"/>
+            <isob4j:String description="atTitle">Une grotte...</isob4j:String>
+            <isob4j:short description="__sequenceCount1">1</isob4j:short>
+            <isob4j:short description="__sequenceCount2">3</isob4j:short>
+            <isob4j:element description="Text">
+               <isob4j:String description="__value">Un peu plus loin, une grotte s'enfonce profondément dans la montagne.</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">nain</isob4j:String>
+               <isob4j:String description="__value">Ah, qu'il fait bon rentrer chez soi</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">elfe</isob4j:String>
+               <isob4j:String description="__value">Il fait bien noir là-dedans. Restons dehors profiter du soleil.</isob4j:String>
+            </isob4j:element>
+            <isob4j:element description="Answer">
+               <isob4j:mask bit1="1"/>
+               <isob4j:String description="atCategory">humain</isob4j:String>
+               <isob4j:String description="__value">Une grotte ? Où ça ?</isob4j:String>
+            </isob4j:element>
+         </isob4j:element>
+      </isob4j:element>
+      <isob4j:element description="Result">
+         <isob4j:short description="__sequenceCount1">3</isob4j:short>
+         <isob4j:element description="Category">
+            <isob4j:mask bit1="1"/>
+            <isob4j:String description="atName">nain</isob4j:String>
+            <isob4j:String description="__value">Vous, Vous êtes bien un nain !</isob4j:String>
+         </isob4j:element>
+         <isob4j:element description="Category">
+            <isob4j:mask bit1="1"/>
+            <isob4j:String description="atName">elfe</isob4j:String>
+            <isob4j:String description="__value">Vous avez plutôt l'air d'un elfe...</isob4j:String>
+         </isob4j:element>
+         <isob4j:element description="Category">
+            <isob4j:mask bit1="1"/>
+            <isob4j:String description="atName">humain</isob4j:String>
+            <isob4j:String description="__value">Vous n'êtes qu'un humain, finalement.</isob4j:String>
+         </isob4j:element>
+      </isob4j:element>
+   </isob4j:element>
+</isob4j:document>

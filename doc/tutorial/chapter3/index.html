@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Chapter 3: Writing your XML Schema...</title>
+  </head>
+  <body>
+    <h1>Chapter 3: XML Schema</h1>
+      <p>
+        B4J tool works on a grammar definition using an XML Schema subset. In a nutshell, you have to
+        declare all elements first, then all corresponding complex types. Complex types may not be
+        embedded in one another, and have basically attributes and three possible contents:
+        <ul>
+          <li>text content</li>
+          <li>child elements in sequence (but same element may not appear twice at two non-successive different positions)</li>
+          <li>child elements in choice</li>
+        </ul>
+        Choices and sequences can not be mixed in the current version, and may never be in potential 
+        future releases.
+      </p>
+      <h2>Declaring allowed Vocaburary</h2>
+        <p>
+          First, declare all element names that appear in game data, starting with root element quizz.
+          We don't consider attributes for now. <br />
+          Each element declaration uses following syntax:
+          <pre>&lt;xsd:element name="elementName" type="seq or ch or st"/&gt;</pre>
+        </p>
+        <p>
+          type attribute is used in XML Schema to reference the corresponding complex type,
+          <pre>e.g. gmr:ElementName</pre>
+          The "gmr" prefix, associated with your game namespace "http://www.example.com/Guess_Me_Right",
+          is always included in references (for complex types, attributes, etc...).
+        </p>
+        <p>
+          In this tutorial, we use an intermediate syntax: simply write type="seq" for sequences, 
+          type="ch" for choices, and type="s" for simple content elements (with text content). <br />
+          <i>Cheat: <a href="GuessMeRight-elements.xsd">HERE</a> is corresponding xml schema</i>.
+        </p>
+      <h2>Generating Complex Types for Elements</h2>
+        <p>
+          <pre>ant addSchemaTypes</pre> generates template complex types according to your previous
+          declarations. Based on our conventions, each complex type has the same name as corresponding 
+          element, different only by first capital letter.
+          <a href="GuessMeRight-empty-types.xsd">THIS</a> is the resulting file.
+        </p>
+      <h2>Adding attributes and children</h2>
+        <p>
+          You should now add attributes declarations, using following syntax:
+          <pre>&lt;xsd:attribute name="attributeName" type="xsd:byte" /&gt;</pre>
+          Attribute name is free; for an attributeName attribute, an atAttributeName variable
+          will contain decoded value, and an isAtAttributeNamePresent boolean will be available
+          if it is an optional one. <br />
+          Following table lists supported types with corresponding Java type:
+          <table border="1">
+            <tr><th>XML Schema</th><th>Java</th></tr>
+            <tr><td>xsd:boolean</td><td>boolean</td></tr>
+            <tr><td>xsd:byte</td><td>byte</td></tr>
+            <tr><td>xsd:short</td><td>short</td></tr>
+            <tr><td>xsd:int</td><td>int</td></tr>
+            <tr><td>xsd:unsignedInt</td><td>int</td></tr>
+            <tr><td>xsd:long</td><td>long</td></tr>
+            <tr><td>xsd:float</td><td>int*</td></tr>
+            <tr><td>xsd:double</td><td>double</td></tr>
+            <tr><td>xsd:string</td><td>String (UTF-8)</td></tr>
+            <tr><td>mathFP:float</td><td>int (encoded with MathFP)</td></tr>
+            <tr><td>mathFP:radAngle</td><td>int (encoded with MathFP)</td></tr>
+            <tr><td>mathFP:cosRadAngle</td><td>int (encoded with MathFP)</td></tr>
+            <tr><td>mathFP:sinRadAngle</td><td>int (encoded with MathFP)</td></tr>
+            <tr><td>mathFP:minusCosRadAngle</td><td>int (encoded with MathFP)</td></tr>
+            <tr><td>mathFP:minusSinRadAngle</td><td>int (encoded with MathFP)</td></tr>
+            <tr><td>include:Id</td><td>byte</td></tr>
+            <tr><td>include:IdRef</td><td>byte</td></tr>
+            <tr><td>ignore:Id</td><td>None</td></tr>
+            <tr><td>ignore:IdRef</td><td>None</td></tr>
+          </table>
+          <i>*: was int before mathFP:float was available, should become float.</i><br />
+          <i>Cheat: <a href="GuessMeRight.xsd">THIS</a> is resulting file</i>
+        </p>
+      <h2>Validate Complete Grammar and Data</h2>
+        <p>
+          Finally, your schema is now VALID! You can use it to validate your game data, using
+          <pre>ant validateData</pre>
+          but you should first check it is a valid XML Schema subset for B4J using
+          <pre>ant validateSchema</pre>
+        </p>
+      <h2>Next</h2>
+        <p>
+        Go on to <a href="../chapter4/index.html">Chapter 4...</a><br />
+        or back 
+        to <a href="../chapter1/index.html">Chapter 1</a>
+        or <a href="../chapter2/index.html">Chapter 2</a>.
+        </p>
+  </body>
+</html>
