@@ -60,9 +60,11 @@
   </xsl:template>
   -->
   
+  <xsl:output method="xml" encoding="ISO-8859-1" />
+  
   <xsl:template match="isob4j:file">
     <xsl:variable name="fileName" select="." />
-    <xsl:variable name="Action_doInlineFile" select="xmlbin:PowerPackJavaEncoder.writeFile($fileName)"/>
+    <xsl:variable name="Action_doInlineFile" select="xmlbin:PowerPackJavaEncoder.writeFile(string($fileName))"/>
   </xsl:template>
   
 </xsl:stylesheet>
