@@ -5,7 +5,7 @@
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    
    xmlns:isob4j="http://eric.brechemier.name/2004/bin4java/isoXml"
-   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:info="http://eric.brechemier.name/2005/info"
    
    xmlns:java="http://xml.apache.org/xalan/java"
    xmlns:xmlbin="xalan://name.brechemier.eric"
@@ -13,7 +13,7 @@
   <!-- name (with or without path) of encoded file, with extension -->
   <xsl:param name="b4jFileName" select="'./output/defaultOutput.b4j'"/>
   
-  <xsl:output method="text" encoding="ISO-8859-1" />
+  <xsl:output method="xml" encoding="ISO-8859-1" />
   <!--
   Input :
     ISO B4J document: XML document following same structure as b4j binary file;
@@ -50,9 +50,11 @@
   for its use of Xalan Java extension.
   -->
   <xsl:template match="/">
-    <xsl:call-template name="openBinaryDocument" />
-      <xsl:call-template name="writeBinaryDocument" /> 
-    <xsl:call-template name="closeBinaryDocument" />
+    <info:description>
+      <xsl:call-template name="openBinaryDocument" />
+        <xsl:call-template name="writeBinaryDocument" /> 
+      <xsl:call-template name="closeBinaryDocument" />
+    </info:description>
   </xsl:template>
    
   <xsl:template name="openBinaryDocument">
