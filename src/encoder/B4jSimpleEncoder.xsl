@@ -21,7 +21,7 @@
    
   Output :
     empty file, may be used for simple descriptions or error logging in future versions.
-    We use a specific java class (using MathFP for floats) to encode the binary document
+    We use a specific java class (using Fixed Point Library for floats) to encode the binary document
     using Java writing methods. This is the 'useful' output document.
     
   Created:
