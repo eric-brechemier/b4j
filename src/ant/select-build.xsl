@@ -9,7 +9,7 @@
    <!-- 'standard' or 'powerpack' -->
    <xsl:param name="b4j-version" select="'powerpack'" />
    
-   <xsl:param name="b4j-version-number" select="'1.1'" />
+   <xsl:param name="b4j-version-number" select="'1.2 (beta)'" />
    
    <xsl:output method="xml" indent="yes" encoding="ISO-8859-1" />
    
