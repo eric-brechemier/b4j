@@ -160,7 +160,7 @@
     <xsl:param name="typeRef" />
     
     <xsl:variable name="xsdURI" select="'http://www.w3.org/2001/XMLSchema'" />
-    <xsl:variable name="mathFPURI" select="'http://eric.brechemier.name/2004/Onno.Hommes/MathFP/'" />
+    <xsl:variable name="fpURI" select="'http://eric.brechemier.name/2004/fp/'" />
     <xsl:variable name="includeIdRefURI" select="'http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/includeValues/'" />
     <xsl:variable name="ignoreIdRefURI" select="'http://eric.brechemier.name/2004/generation/encoder-decoder/idRefResolution/ignoreValues/'" />
     <xsl:variable name="targetNamespaceURI">
@@ -210,7 +210,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
-      <xsl:when test="$typeNamespaceURI = $mathFPURI">
+      <xsl:when test="$typeNamespaceURI = $fpURI">
         <xsl:choose>
           <xsl:when test="$typeName = 'float'">
             <xsl:apply-templates mode="processFloatValue" select="." />
