@@ -316,7 +316,7 @@
         </a4j:topic>
       </xsd:appinfo>
     </xsd:annotation>
-    <!-- TEST -->
+    <!--TEST-->
     <xsd:choice minOccurs="0" maxOccurs="0">
       <xsd:element ref="svg:use"/>
     </xsd:choice>
@@ -441,8 +441,8 @@
     <xsd:simpleContent>
       <xsd:extension base="xsd:string">
         <xsd:attribute name="id" type="ignore:Id"/>
-        <xsd:attribute name="color" type="svg:RGBColor" />
-        <!-- <xsd:attribute name="color" type="xsd:byte" /> -->
+        <xsd:attribute name="color" type="svg:RGBColor"/>
+        <!--<xsd:attribute name="color" type="xsd:byte" />-->
       </xsd:extension>
     </xsd:simpleContent>
   </xsd:complexType>
