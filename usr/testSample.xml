@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<svg xmlns="http://eric.brechemier.name/2004/NanoSvg" width="180" height="208"
+  viewBox_x='0' viewBox_y='0' viewBox_width='180' viewBox_height='208'
+  background-fill='16165'
+>
+<!--
+<svg xmlns='http://www.expway.com/2004/NanoSvg'
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width='180' height='208' 
+   viewBox_x='0' viewBox_y='0' viewBox_width='180' viewBox_height='208'
+>
+  <defs>
+    <polygon id="polygon" stroke="#00FF00" fill="none">
+      <points>
+        <point x="0" y="0" />
+        <point x="40" y="-10" />
+        <point x="40" y="10" />
+      </points>
+      <transforms>
+        <translate x="20" y="50" />
+        <scale factor="2" />
+      </transforms>
+    </polygon>
+  </defs>
+  <rect x='0' y='-8' width='26' height='16'/>
+  <circle cx='0' cy='0' r='8'/>
+  <g id='0'>
+    <text x='50' y='20'>Search for Clips</text>
+  </g>
+  <use xlink:href="#polygon" x="25" y="25" stroke="#FF0000">
+    <transforms>
+      <transform scale="1.5" />
+    </transforms>
+  </use>
+  <image x="20" y="25" width="100" height="100" xlink:href="0"/>
+-->
+  <defs>
+    <text id="hello" color="blue">Hello</text>
+    <use id="referreeBefore" href="hello" />
+    <use id="referrerAfter" href="referreeBefore"/>
+    <use id="self" href="self" />
+    <use id="referrerBefore" href="referreeAfter" />
+    <use id="referreeAfter" href="hello"/>
+    <g id="helloWorld" includeFile="./usr/binaryData.b4j">
+      <content>
+        <use href="hello" />
+        <use href="world" />
+      </content>
+    </g>
+    <text id="world">World!</text>
+    
+    <text id="goodbye">Goodbye</text>
+    <text id="cruel">Cruel</text>
+    <g id="goodbyecruelworld" includeFile="./usr/textData.txt">
+      <content>
+        <use href="goodbye" />
+        <use href="cruel" />
+        <use href="world" />
+      </content>
+    </g>
+  </defs>
+  <content>
+    <use href="helloWorld" />
+  </content>
+</svg>
