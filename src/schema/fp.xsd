@@ -2,14 +2,13 @@
 <xsd:schema
    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
    
-   xmlns:mathFP="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/"
-   targetNamespace="http://eric.brechemier.name/2004/Onno.Hommes/MathFP/"
+   xmlns:fp="http://eric.brechemier.name/2004/fp/"
+   targetNamespace="http://eric.brechemier.name/2004/fp/"
    elementFormDefault="qualified"
 >
   <xsd:annotation>
     <xsd:documentation>
-      Xml Shema to define a MathFP fixed point integer (for float calulations on mobile phone).
-      MathFP: developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/
+      Xml Shema to define a Fixed Point Math Library (for float calulations on mobile phone).
     </xsd:documentation>
   </xsd:annotation>
   
