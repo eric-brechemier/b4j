@@ -5,7 +5,7 @@
    targetNamespace="http://eric.brechemier.name/2004/femtosvg"
    elementFormDefault="qualified"
    xmlns:fsvg="http://eric.brechemier.name/2004/femtosvg"
-   xmlns:mathfp="http://eric.brechemier.name/2004/mathFP"
+   xmlns:fp="http://eric.brechemier.name/2004/fp/"
    
    xmlns:config="http://eric.brechemier.name/2004/generation/encoder-decoder/config"
    xmlns:a4j="http://eric.brechemier.name/2004/generation/encoder-decoder/semanticActionsForJava"
@@ -14,7 +14,6 @@
   *** Credits ***
   Author: Eric Bréchemier, October 2004
   
-  MathFP was developed by Onno Hommes, see http://home.rochester.rr.com/ohommes/MathFP/
   -->
   <xsd:annotation>
     <xsd:appinfo>
@@ -413,6 +412,6 @@
   
   <!-- simple types -->
   
-    <!-- empty for now, but mathFP types must be declared in another imported schema -->
+    
   
 </xsd:schema>
