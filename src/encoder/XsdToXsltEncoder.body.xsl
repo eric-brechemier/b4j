@@ -169,6 +169,8 @@
     </isob4j:long>
   </xsl:template>
   
+  <!-- WORK IN PROGRESS HERE: differenciate xsd:float/double from fp:float/double -->
+  
   <xsl:template mode="processFloatValue" match=" xsd:attribute | xsd:simpleContent ">
     <isob4j:float>
       <xsl:apply-templates mode="encodeValue" select="."/>
