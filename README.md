@@ -99,9 +99,9 @@ is available in French,
 from the presentation at the end of my
 Master in Video Games and Interactive Media:*
 
-* [Project Report for my Master Degree](https://eric-brechemier.github.io/b4j/doc/education/EricBrechemier_Automatiser_le_passage_des_donnees_aux_objets_java.pdf)
-* [Slides for the project presentation in December 2004](https://eric-brechemier.github.io/b4j/doc/education/EricBrechemier_Presentation_EricBrechemier_Automatiser_le_passage_des_donnees_aux_objets_java.pdf)
-* [XSLT Orienté Objets / Object Oriented XSLT](https://eric-brechemier.github.io/b4j/doc/education/EB_XSLT_OO.pdf)
+* [Project Report for my Master Degree (December 2004)](https://eric-brechemier.github.io/b4j/doc/education/EricBrechemier_Automatiser_le_passage_des_donnees_aux_objets_java.pdf)
+* [Slides for the project presentation (December 2004)](https://eric-brechemier.github.io/b4j/doc/education/EricBrechemier_Presentation_EricBrechemier_Automatiser_le_passage_des_donnees_aux_objets_java.pdf)
+* [XSLT Orienté Objets / Object Oriented XSLT (March 2006)](https://eric-brechemier.github.io/b4j/doc/education/EB_XSLT_OO.pdf)
 
 ## Credits
 
