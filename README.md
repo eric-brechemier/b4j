@@ -75,11 +75,11 @@ They are summarized in a single page job aid:
 
 ## Tutorial
 
-* [Chapter 1: Enter the Game…][chapter1]
-* [Chapter 2: Setup][chapter2]
-* [Chapter 3: XML Schema][chapter3]
-* [Chapter 4: Encoding Game Data][chapter4]
-* [Chapter 5: Semantic Actions][chapter5]
+* [Chapter 1: Discover the Game][chapter1]
+* [Chapter 2: Configuring the B4J tool][chapter2]
+* [Chapter 3: Writing your XML Schema][chapter3]
+* [Chapter 4: Encoding data][chapter4]
+* [Chapter 5: Writing your custom decoding code][chapter5]
 
 [chapter1]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter1/
 [chapter2]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter2/
