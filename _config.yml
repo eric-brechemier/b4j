@@ -1,1 +1,8 @@
 theme: jekyll-theme-cayman
+title: Binary for Java (B4J)
+description: XML Data Encoding / Decoding Tool for Java MIDP/DOJA (2004–2005)
+author:
+  name: Eric Bréchemier
+  github: eric-brechemier
+
+exclude: ["lib"]
