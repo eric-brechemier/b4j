@@ -60,4 +60,4 @@ applied to the example of a quiz game.
 
 ## License
 
-MIT
+[MIT](https://opensource.org/licenses/MIT)
