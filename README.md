@@ -55,8 +55,8 @@ applied to the example of a quiz game.
 
 ## Credits
 
-* Author: Eric Bréchemier (October 2004)
-* Concept: Fabien Delpiano (May 2004)
+* Author: [Eric Bréchemier](https://github.com/eric-brechemier) (October 2004)
+* Concept: [Fabien Delpiano](http://www.pastagames.com/bio/) (May 2004)
 
 ## License
 
