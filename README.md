@@ -51,6 +51,8 @@ objects needed by the application, such as game levels.
 These steps are described in details in the online [tutorial][],
 applied to the example of a quiz game.
 
+[tutorial]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter1/
+
 ## Credits
 
 * Author: Eric Bréchemier (October 2004)
