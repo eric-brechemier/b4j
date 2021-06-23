@@ -65,9 +65,10 @@ objects needed by the application, such as game levels.
 * Generate Java decoder: `ant generateDecoder`
 * Add it to the Java project for your application
 
-These steps are described in details in the online [tutorial][],
-applied to the example of a quiz game. They are summarized in a
-single page job aid: [Quick Start in 5 Steps][quickstart].
+*These steps are described in details in the online [tutorial][],
+applied to the example of a quiz game.  
+They are summarized in a single page job aid:
+[Quick Start in 5 Steps][quickstart].*
 
 [quickstart]: https://eric-brechemier.github.io/b4j/doc/quickStart/quickStart.pdf
 [tutorial]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter1/
