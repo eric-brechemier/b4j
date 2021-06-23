@@ -30,8 +30,8 @@ objects needed by the application, such as game levels.
 
 ## Requirements
 
-* Java JDK 1.4 or higher
-* Apache Ant 1.6.1 or higher
+* [Java JDK 1.4 or higher](https://openjdk.java.net/)
+* [Apache Ant 1.6.1 or higher](https://ant.apache.org/)
 
 ## Usage
 
