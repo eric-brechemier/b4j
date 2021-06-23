@@ -73,6 +73,20 @@ They are summarized in a single page job aid:
 [quickstart]: https://eric-brechemier.github.io/b4j/doc/quickStart/quickStart.pdf
 [tutorial]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter1/
 
+## Tutorial
+
+* [Chapter 1: Enter the Game…][chapter1]
+* [Chapter 2: Setup][chapter2]
+* [Chapter 3: XML Schema][chapter3]
+* [Chapter 4: Encoding Game Data][chapter4]
+* [Chapter 5: Semantic Actions][chapter5]
+
+[chapter1]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter1/
+[chapter2]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter2/
+[chapter3]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter3/
+[chapter4]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter4/
+[chapter5]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter5/
+
 ## Documentation
 
 * [Overview](https://eric-brechemier.github.io/b4j/doc/overview/overview.pdf)
