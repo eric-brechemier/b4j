@@ -35,22 +35,41 @@ objects needed by the application, such as game levels.
 
 ## Usage
 
-1. *Bring your own XML document*
-2. *Configure properties at the top of the build.xml*
-3. Create an empty schema: `ant createEmptySchema`
-4. *Edit the schema to list the elements found in your XML document*
-5. Add complex types to the schema: `ant addSchemaTypes`
-6. *Edit the schema to add attributes and children in the complex types*
-7. Validate the schema: `ant validateData`
-8. *Encode your XML document to binary: `ant encoding`*
-9. Test decoding: `ant testDecoding`
-10. Add annotations for semantic actions to the schema: `ant addSemanticActions`
-11. *Edit the schema to add your Java code (semantic actions) in annotations*
-12. Generate Java decoder: `ant generateDecoder`
+### Setup and prerequisites
+
+* Download or checkout a copy of the b4j project
+* Check you have Apache Ant and Java JDK 1.4 or higher installed
+* Configure user properties at the top of the build.xml
+
+### Write and validate Your Schema
+
+* Bring your own XML document
+* Create an empty schema: `ant createEmptySchema`
+* Edit the schema to list the elements found in your XML document
+* Add complex types to the schema: `ant addSchemaTypes`
+* Edit the schema to add attributes and children in the complex types
+* Validate the schema: `ant validateData`
+
+### Generate Encoder & Test Decoder
+
+* Encode your XML document to binary: `ant encoding`
+* Test decoding: `ant testDecoding`
+
+### Write Your Decoding Actions
+
+* Add annotations for semantic actions to the schema: `ant addSemanticActions`
+* Edit the schema to add your Java code (semantic actions) in annotations
+
+### Generate Your Specific Decoder
+
+* Generate Java decoder: `ant generateDecoder`
+* Add it to the Java project for your application
 
 These steps are described in details in the online [tutorial][],
-applied to the example of a quiz game.
+applied to the example of a quiz game. They are summarized in a
+single page job aid: [Quick Start in 5 Steps][quickstart].
 
+[quickstart]: https://eric-brechemier.github.io/b4j/doc/quickStart/quickStart.pdf
 [tutorial]: https://eric-brechemier.github.io/b4j/doc/tutorial/chapter1/
 
 ## Documentation
